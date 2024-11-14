@@ -23,5 +23,7 @@ public class Project_COP4331 {
         LocalTime eventTime = LocalTime.now();
         EventDetailsWindow eventDetailsPage = new EventDetailsWindow("COP4331 Project", date, eventTime, "COP4331", "Final project for class", "High"
                 , true, true,true);
+        
+        CalendarWindow calendarPage = new CalendarWindow();
     }
 }

@@ -1,6 +1,8 @@
+GUI/GridBox.class
 GUI/AddEventWindow.class
 GUI/UserProfileWindow.class
 GUI/CreateAccountWindow.class
+GUI/EventDetailsWindow.class
+GUI/CalendarWindow.class
 GUI/LoginWindow.class
 GUI/Project_COP4331.class
-GUI/EventDetailsWindow.class
