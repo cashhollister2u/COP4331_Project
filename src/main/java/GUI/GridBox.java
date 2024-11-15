@@ -18,9 +18,15 @@ import javax.swing.Icon;
 public class GridBox implements Icon {
     // local variables
     private Color color = Color.BLACK;
-    private int width = 150;
-    private int height = 150;
+    private int width;
+    private int height;
+    private String day;
     
+    public GridBox(String day, int width, int height) {
+        this.day = day;
+        this.height = height;
+        this.width = width;
+    }
   
     /**
      * Constructs a Rectangle icon of a given color.
@@ -79,7 +85,9 @@ public class GridBox implements Icon {
        Graphics2D g2 = (Graphics2D) g;
        Rectangle2D.Double rectangle = new Rectangle2D.Double(x, y, width, height);
        g2.setColor(this.color);
+       g2.drawString(day,10, 20);
        g2.draw(rectangle);
+       
     }
     
 }

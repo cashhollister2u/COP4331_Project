@@ -6,6 +6,10 @@ package GUI;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Arrays;
+import java.util.List;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  *
@@ -14,45 +18,113 @@ import java.awt.*;
 public class CalendarWindow {
     public CalendarWindow() {
         JFrame frame = new JFrame();
-        frame.setLayout(new BorderLayout());        
-        
-        // set up panels to contain components
+        frame.setLayout(new BorderLayout());
+
+        // Set up header panel
         JPanel headerPanel = new JPanel();
-        headerPanel.setLayout(new BoxLayout(headerPanel, BoxLayout.Y_AXIS));
-        
-        //Header labels
-        headerPanel.add(Box.createVerticalStrut(20));
-        
+        headerPanel.setLayout(new BoxLayout(headerPanel, BoxLayout.X_AXIS));
+
+        JPanel subHeaderPanel = new JPanel();
+        subHeaderPanel.setLayout(new BoxLayout(subHeaderPanel, BoxLayout.Y_AXIS));
+
         JLabel headerLabel = new JLabel("Planner Application");
-        headerPanel.add(headerLabel);
+        subHeaderPanel.add(headerLabel);
+
+        subHeaderPanel.add(Box.createVerticalStrut(20));
+
+        JLabel prompt = new JLabel("Calendar");
+        subHeaderPanel.add(prompt);
+
+        headerPanel.add(subHeaderPanel);
+
+        // Add buttons to header
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new GridLayout(1, 3));
+
+        JButton todayButton = new JButton("Today");
+        buttonPanel.add(todayButton);
+
+        JButton weekButton = new JButton("Week");
+        buttonPanel.add(weekButton);
+
+        JButton monthButton = new JButton("Month");
+        buttonPanel.add(monthButton);
+
+        headerPanel.add(buttonPanel);
+        frame.add(headerPanel, BorderLayout.NORTH);
+
+        // Set up card layout for calendar components
+        JPanel calendarPanel = new JPanel(new CardLayout());
         
-        headerPanel.add(Box.createVerticalStrut(20));
+        JPanel calandarContainerPanel = new JPanel(new FlowLayout());
+        JPanel calandarCompsPanel = new JPanel(new GridLayout(5, 7));
+        calandarContainerPanel.add(calandarCompsPanel);
         
-        JLabel prompt = new JLabel("Calendar:");
-        headerPanel.add(prompt);
+        JPanel weekContainerPanel = new JPanel(new FlowLayout());
+        JPanel weekCompsPanel = new JPanel(new GridLayout(1, 7));
+        weekContainerPanel.add(weekCompsPanel);
         
-        headerPanel.add(Box.createVerticalStrut(20));
+        JPanel todayContainerPanel = new JPanel(new FlowLayout());
+        JPanel todayCompsPanel = new JPanel(new GridLayout(1, 7));
+        todayContainerPanel.add(todayCompsPanel);
         
-        // set up panels to contain components
-        JPanel calandarCompsPanel = new JPanel();
-        calandarCompsPanel.setLayout(new FlowLayout());
-        JPanel calandarPanel = new JPanel();
-        calandarPanel.setLayout(new GridLayout(5, 7));
-        
+
+        // Populate calendar components
         for (int x = 0; x < 31; x++) {
-            GridBox box = new GridBox();
+            GridBox box = new GridBox(String.valueOf(x), 150, 150);
             JLabel boxLabel = new JLabel(box);
-            calandarPanel.add(boxLabel);
+            calandarCompsPanel.add(boxLabel);
+            
+        }
+
+        // Populate week components
+        List<String> weekDays = Arrays.asList(".  Sunday", ".  Monday", ".  Tuesday", ".  Wednesday", ".  Thursday",".  Friday",".  Saturday");
+        for (int x = 0; x < 7; x++) {
+            GridBox box = new GridBox(String.valueOf(x) + weekDays.get(x), 150, 800);
+            JLabel boxLabel = new JLabel(box);
+            weekCompsPanel.add(boxLabel);
         }
         
-        // add the panels to the frame
-        frame.add(headerPanel, BorderLayout.NORTH);
-        calandarCompsPanel.add(calandarPanel);
-        frame.add(calandarCompsPanel);
+        // Populate Today components
+        for (int x = 0; x < 1; x++) {
+            GridBox box = new GridBox("Today", 800, 800);
+            JLabel boxLabel = new JLabel(box);
+            todayCompsPanel.add(boxLabel);
+            
+        }
         
-        // Display objects in frame
+        calendarPanel.add(todayContainerPanel, "Today");
+        calendarPanel.add(calandarContainerPanel, "Month");
+        calendarPanel.add(weekContainerPanel, "Week");
+        
+        frame.add(calendarPanel, BorderLayout.CENTER);
+
+        // Button actions to switch views
+        CardLayout cardLayout = (CardLayout) (calendarPanel.getLayout());
+        
+        todayButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(calendarPanel, "Today");
+            }
+        });
+        
+        weekButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(calendarPanel, "Week");
+            }
+        });
+
+        monthButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(calendarPanel, "Month");
+            }
+        });
+
+        // Display frame
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
         frame.setSize(1100, 900);
         frame.setVisible(true);
     }
