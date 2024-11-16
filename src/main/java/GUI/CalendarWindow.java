@@ -2,6 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
+
 package GUI;
 
 import javax.swing.*;
@@ -12,16 +13,23 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
+ * This class represents the calendar window, providing a user interface
+ * for viewing and interacting with the calendar.
  *
- * @author cashhollister
+ * @author cashhollister, andrewcogins
  */
 public class CalendarWindow {
-    public CalendarWindow() {
-        JFrame frame = new JFrame();
-        frame.setLayout(new BorderLayout());
+    private JPanel calendarPanel;
+    private JPanel headerPanel;
 
-        // Set up header panel
-        JPanel headerPanel = new JPanel();
+    /**
+     * Constructs the CalendarWindow and initializes its components.
+     */
+    public CalendarWindow() {
+        calendarPanel = new JPanel(new CardLayout());
+
+        // Create header panel
+        headerPanel = new JPanel();
         headerPanel.setLayout(new BoxLayout(headerPanel, BoxLayout.X_AXIS));
 
         JPanel subHeaderPanel = new JPanel();
@@ -29,7 +37,6 @@ public class CalendarWindow {
 
         JLabel headerLabel = new JLabel("Planner Application");
         subHeaderPanel.add(headerLabel);
-
         subHeaderPanel.add(Box.createVerticalStrut(20));
 
         JLabel prompt = new JLabel("Calendar");
@@ -51,64 +58,58 @@ public class CalendarWindow {
         buttonPanel.add(monthButton);
 
         headerPanel.add(buttonPanel);
-        frame.add(headerPanel, BorderLayout.NORTH);
 
-        // Set up card layout for calendar components
-        JPanel calendarPanel = new JPanel(new CardLayout());
-        
-        JPanel calandarContainerPanel = new JPanel(new FlowLayout());
-        JPanel calandarCompsPanel = new JPanel(new GridLayout(5, 7));
-        calandarContainerPanel.add(calandarCompsPanel);
-        
+        // Create containers for different calendar views
+        JPanel calendarContainerPanel = new JPanel(new FlowLayout());
+        JPanel calendarCompsPanel = new JPanel(new GridLayout(5, 7));
+        calendarContainerPanel.add(calendarCompsPanel);
+
         JPanel weekContainerPanel = new JPanel(new FlowLayout());
         JPanel weekCompsPanel = new JPanel(new GridLayout(1, 7));
         weekContainerPanel.add(weekCompsPanel);
-        
+
         JPanel todayContainerPanel = new JPanel(new FlowLayout());
         JPanel todayCompsPanel = new JPanel(new GridLayout(1, 7));
         todayContainerPanel.add(todayCompsPanel);
-        
 
         // Populate calendar components
         for (int x = 0; x < 31; x++) {
             GridBox box = new GridBox(String.valueOf(x), 150, 150);
             JLabel boxLabel = new JLabel(box);
-            calandarCompsPanel.add(boxLabel);
-            
+            calendarCompsPanel.add(boxLabel);
         }
 
         // Populate week components
-        List<String> weekDays = Arrays.asList(".  Sunday", ".  Monday", ".  Tuesday", ".  Wednesday", ".  Thursday",".  Friday",".  Saturday");
+        List<String> weekDays = Arrays.asList(".  Sunday", ".  Monday", ".  Tuesday", ".  Wednesday", ".  Thursday", ".  Friday", ".  Saturday");
         for (int x = 0; x < 7; x++) {
             GridBox box = new GridBox(String.valueOf(x) + weekDays.get(x), 150, 800);
             JLabel boxLabel = new JLabel(box);
             weekCompsPanel.add(boxLabel);
         }
-        
+
         // Populate Today components
         for (int x = 0; x < 1; x++) {
             GridBox box = new GridBox("Today", 800, 800);
             JLabel boxLabel = new JLabel(box);
             todayCompsPanel.add(boxLabel);
-            
         }
-        
+
+        // Add calendar view containers to main panel
         calendarPanel.add(todayContainerPanel, "Today");
-        calendarPanel.add(calandarContainerPanel, "Month");
+        calendarPanel.add(calendarContainerPanel, "Month");
         calendarPanel.add(weekContainerPanel, "Week");
-        
-        frame.add(calendarPanel, BorderLayout.CENTER);
 
         // Button actions to switch views
-        CardLayout cardLayout = (CardLayout) (calendarPanel.getLayout());
-        
+        CardLayout cardLayout = (CardLayout) calendarPanel.getLayout();
+        cardLayout.show(calendarPanel, "Month"); // Initially show the "Month" view
+
         todayButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(calendarPanel, "Today");
             }
         });
-        
+
         weekButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -122,10 +123,23 @@ public class CalendarWindow {
                 cardLayout.show(calendarPanel, "Month");
             }
         });
+    }
 
-        // Display frame
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1100, 900);
-        frame.setVisible(true);
+    /**
+     * Returns the main calendar panel.
+     *
+     * @return The calendarPanel.
+     */
+    public JPanel getCalendarPanel() {
+        return calendarPanel;
+    }
+
+    /**
+     * Returns the header panel containing the calendar view buttons.
+     *
+     * @return The headerPanel.
+     */
+    public JPanel getHeaderPanel() {
+        return headerPanel;
     }
 }

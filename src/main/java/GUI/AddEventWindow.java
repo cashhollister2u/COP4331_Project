@@ -8,99 +8,111 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
+ * This class represents the window for adding new events to the calendar.
+ * It provides a user interface with fields for entering event details.
  *
- * @author cashhollister
+ * @author cashhollister, andrewcogins
  */
 public class AddEventWindow {
+    private JPanel addEventPanel;
+
+    /**
+     * Constructs the AddEventWindow and initializes its components.
+     */
     public AddEventWindow() {
-        // init JFrame
-        JFrame frame = new JFrame();
-        frame.setLayout(new BorderLayout());        
-        
-        // set up panels to contain components
+        addEventPanel = new JPanel();
+        addEventPanel.setLayout(new BorderLayout());
+
+        // Create header panel
         JPanel headerPanel = new JPanel();
         headerPanel.setLayout(new BoxLayout(headerPanel, BoxLayout.Y_AXIS));
-        
-        JPanel detailsPanel = new JPanel();
-        detailsPanel.setLayout(new BoxLayout(detailsPanel, BoxLayout.Y_AXIS));
-        
-        //Header labels
-        headerPanel.add(Box.createVerticalStrut(20));
-        
+
         JLabel title = new JLabel("Planner Application");
         headerPanel.add(title);
-        
+
         headerPanel.add(Box.createVerticalStrut(20));
-        
+
         JLabel prompt = new JLabel("Add New Event:");
         headerPanel.add(prompt);
-        
+
         headerPanel.add(Box.createVerticalStrut(20));
-        
-        // details components 
+
+        // Create details panel
+        JPanel detailsPanel = new JPanel();
+        detailsPanel.setLayout(new BoxLayout(detailsPanel, BoxLayout.Y_AXIS));
+
+        // Event title
         JLabel titleLabel = new JLabel("Title: ");
         detailsPanel.add(titleLabel);
         JTextField titleField = new JTextField();
         titleField.setPreferredSize(new Dimension(200, 5));
         detailsPanel.add(titleField);
-        
+
+        // Event date
         JLabel dateLabel = new JLabel("Date: ");
         detailsPanel.add(dateLabel);
-        JComboBox dateBox = new JComboBox();
+        JComboBox<String> dateBox = new JComboBox<>(); 
         detailsPanel.add(dateBox);
-        
+
+        // Event time
         JLabel timeLabel = new JLabel("Time: ");
         detailsPanel.add(timeLabel);
-        JComboBox timeBox = new JComboBox();
+        JComboBox<String> timeBox = new JComboBox<>(); 
         detailsPanel.add(timeBox);
-        
+
+        // Event course (assuming this is relevant)
         JLabel courseLabel = new JLabel("Course: ");
         detailsPanel.add(courseLabel);
-        JTextField dateField = new JTextField();
+        JTextField dateField = new JTextField(); // Consider renaming to courseField
         dateField.setPreferredSize(new Dimension(200, 5));
         detailsPanel.add(dateField);
-        
+
+        // Event description
         JLabel descriptionLabel = new JLabel("Description: ");
         detailsPanel.add(descriptionLabel);
         JTextArea descriptionField = new JTextArea();
         descriptionField.setPreferredSize(new Dimension(200, 100));
         detailsPanel.add(descriptionField);
-        
+
+        // Event priority
         JLabel priorityLabel = new JLabel("Priority: ");
         detailsPanel.add(priorityLabel);
         JCheckBox priorityBox = new JCheckBox();
         detailsPanel.add(priorityBox);
-        
+
+        // Event status
         JLabel statusLabel = new JLabel("Status: ");
         detailsPanel.add(statusLabel);
         JCheckBox statusBox = new JCheckBox();
         detailsPanel.add(statusBox);
-        
+
+        // Event completion status
         JLabel completeLabel = new JLabel("Complete: ");
         detailsPanel.add(completeLabel);
         JCheckBox completeBox = new JCheckBox();
         detailsPanel.add(completeBox);
-        
+
+        // Event conflict status
         JLabel conflictLabel = new JLabel("Conflict: ");
         detailsPanel.add(conflictLabel);
         JCheckBox conflictBox = new JCheckBox();
         detailsPanel.add(conflictBox);
-        
-        
-        
-        // butons
+
+        // Submit button
         JButton submitButton = new JButton("Add Event");
         detailsPanel.add(submitButton);
-        
-        
-        // add the panels to the frame
-        frame.add(headerPanel, BorderLayout.NORTH);
-        frame.add(detailsPanel);
-        
-        // Display objects in frame
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setSize(500, 600);
-        frame.setVisible(true);
+
+        // Add panels to main panel
+        addEventPanel.add(headerPanel, BorderLayout.NORTH);
+        addEventPanel.add(detailsPanel, BorderLayout.CENTER); 
+    }
+
+    /**
+     * Returns the main panel containing all the components of the AddEventWindow.
+     *
+     * @return The addEventPanel.
+     */
+    public JPanel getAddEventPanel() {
+        return addEventPanel; 
     }
 }

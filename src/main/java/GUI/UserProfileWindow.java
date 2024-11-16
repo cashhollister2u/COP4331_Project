@@ -2,67 +2,83 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
+
 package GUI;
 
 import javax.swing.*;
 import java.awt.*;
 
 /**
+ * This class represents the user profile window for the application.
+ * It displays user information and allows for changing credentials or deleting the account.
  *
- * @author cashhollister
+ * @author cashhollister, andrewcogins
  */
 public class UserProfileWindow {
-    public UserProfileWindow(String Username, String password) {
-        // init JFrame
-        JFrame frame = new JFrame();
-        frame.setLayout(new GridLayout(3, 1));        
-        
-        // set up panels to contain components
+    private JPanel userProfilePanel;
+    private String username;
+    private String password;
+
+    /**
+     * Constructs the UserProfileWindow with the given username and password.
+     *
+     * @param username The username of the user.
+     * @param password The password of the user.
+     */
+    public UserProfileWindow(String username, String password) {
+        this.username = username;
+        this.password = password;
+
+        // Initialize the userProfilePanel
+        userProfilePanel = new JPanel();
+        userProfilePanel.setLayout(new GridLayout(3, 1));
+
+        // Create and set up header panel
         JPanel headerPanel = new JPanel();
         headerPanel.setLayout(new GridLayout(2, 1));
-        
-        JPanel fieldPanel = new JPanel();
-        fieldPanel.setLayout(new BoxLayout(fieldPanel, BoxLayout.Y_AXIS));
-        
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
-        
-        //Header labels
+
         JLabel title = new JLabel("Planner Application");
         headerPanel.add(title);
-        
+
         JLabel prompt = new JLabel("User Profile Information:");
         headerPanel.add(prompt);
-        
-        
-        // text fields 
-        JLabel usernameLabel = new JLabel("Current Username: " + Username);
+
+        // Create and set up field panel
+        JPanel fieldPanel = new JPanel();
+        fieldPanel.setLayout(new BoxLayout(fieldPanel, BoxLayout.Y_AXIS));
+
+        JLabel usernameLabel = new JLabel("Current Username: " + username);
         fieldPanel.add(usernameLabel);
         JTextField usernameField = new JTextField();
         fieldPanel.add(usernameField);
-        JLabel passwordLabel = new JLabel(" Current Password: " + password);
+
+        JLabel passwordLabel = new JLabel("Current Password: " + password);
         fieldPanel.add(passwordLabel);
-        JTextField passwordField = new JTextField();
+        JTextField passwordField = new JPasswordField(); // Changed to JPasswordField for passwords
         fieldPanel.add(passwordField);
-        
-        
-        // butons
-        JButton submitButton = new JButton("Change Credentials");
-        buttonPanel.add(submitButton);
-        
-        JButton signUpButton = new JButton("Delete Account");
-        buttonPanel.add(signUpButton);
-        
-        
-        // add the panels to the frame
-        frame.add(headerPanel);
-        frame.add(fieldPanel);
-        frame.add(buttonPanel);
-        
-        // Display objects in frame
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setSize(500, 300);
-        frame.setVisible(true);
+
+        // Create and set up button panel
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
+
+        JButton changeCredentialsButton = new JButton("Change Credentials");
+        buttonPanel.add(changeCredentialsButton); //Name changed for clarity
+
+        JButton deleteAccountButton = new JButton("Delete Account");
+        buttonPanel.add(deleteAccountButton); //Name changed for clarity
+
+        // Add panels to the main panel
+        userProfilePanel.add(headerPanel);
+        userProfilePanel.add(fieldPanel);
+        userProfilePanel.add(buttonPanel);
+    }
+
+    /**
+     * Returns the main panel containing all the user profile components.
+     *
+     * @return The userProfilePanel.
+     */
+    public JPanel getUserProfilePanel() {
+        return userProfilePanel;
     }
 }
