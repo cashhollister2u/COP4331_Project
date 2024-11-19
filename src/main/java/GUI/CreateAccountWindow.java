@@ -7,6 +7,10 @@ package GUI;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.FileWriter;
+import java.io.IOException;
 
 /**
  * This class represents the window for creating a new user account.
@@ -45,17 +49,17 @@ public class CreateAccountWindow {
 
         JLabel passwordLabel = new JLabel("Password:");
         fieldPanel.add(passwordLabel);
-        JTextField passwordField = new JPasswordField(); // Changed to JPasswordField for passwords
+        JPasswordField passwordField = new JPasswordField(); // Use JPasswordField for passwords
         fieldPanel.add(passwordField);
 
         // Create and set up button panel
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
 
-        JButton signUpButton = new JButton("Sign-Up"); // Renamed for clarity
-        buttonPanel.add(signUpButton );
+        JButton createAccountButton = new JButton("Create Account");
+        buttonPanel.add(createAccountButton);
 
-        JButton loginButton = new JButton("Login"); // Renamed for clarity
+        JButton loginButton = new JButton("Return to Login");
         buttonPanel.add(loginButton);
 
         // Add panels to the frame
@@ -63,10 +67,54 @@ public class CreateAccountWindow {
         frame.add(fieldPanel);
         frame.add(buttonPanel);
 
-        // Set frame properties and display
+        // Set frame properties
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.pack();
         frame.setSize(500, 300);
+
+        // Add action listener to the "Create Account" button
+        createAccountButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String username = usernameField.getText();
+                char[] passwordChars = passwordField.getPassword(); // Use getPassword() for JPasswordField
+                String password = new String(passwordChars);
+
+                // Save username and password (replace with preferred storage method)
+                saveCredentials(username, password);
+
+                // Close the CreateAccountWindow and open LoginWindow
+                frame.dispose();
+                new LoginWindow();
+            }
+        });
+
+        // Add action listener to the "Login" button
+        loginButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Close the CreateAccountWindow and open LoginWindow
+                frame.dispose();
+                new LoginWindow();
+            }
+        });
+
+        // Display the frame
         frame.setVisible(true);
+    }
+
+    /**
+     * Saves the username and password.
+     * Replace this with actual credential storage logic.
+     *
+     * @param username The username to be saved.
+     * @param password The password to be saved.
+     */
+    private void saveCredentials(String username, String password) {
+        // Replace this with actual credential storage logic
+        // This might involve saving to a file, a database, or using another secure storage mechanism
+        // For now just prints the credentials to the console since unsure what we wanted
+        System.out.println("Username: " + username);
+        System.out.println("Password: " + password);
     }
 }
