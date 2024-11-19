@@ -108,15 +108,15 @@ public class LoginWindow {
 
 
     /**
-     * Simulates user authentication. Replace this with your actual authentication logic.
+     * Simulates user authentication. Replace this with actual authentication logic.
      *
      * @param username The entered username.
      * @param password The entered password.
      * @return true if authentication is successful, false otherwise.
      */
     private boolean authenticateUser(String username, String password) {
-        // Replace this with your actual authentication logic
-        // For now, let's just check if both fields are non-empty
+        // Replace this with actual authentication logic
+        // For now, just checks if both fields are non-empty
         return !username.isEmpty() && !password.isEmpty(); 
     }
 
