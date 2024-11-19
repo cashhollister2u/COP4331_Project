@@ -31,7 +31,7 @@ public class MainInterface {
         // Create the main frame
         frame = new JFrame("Planner Application");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1000, 1000);
+        frame.setSize(1500, 1000);
         frame.setLayout(new BorderLayout());
 
         // Create the content panel with CardLayout
@@ -116,14 +116,5 @@ public class MainInterface {
         cardLayout.show(contentPanel, "UserProfileView"); 
 
         frame.setVisible(true);
-    }
-
-    /**
-     * Main method to start the application.
-     *
-     * @param args Command line arguments (not used).
-     */
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new MainInterface());
     }
 }

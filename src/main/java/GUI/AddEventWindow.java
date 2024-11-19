@@ -51,27 +51,32 @@ public class AddEventWindow {
         // Event date
         JLabel dateLabel = new JLabel("Date: ");
         detailsPanel.add(dateLabel);
-        JComboBox<String> dateBox = new JComboBox<>(); 
-        detailsPanel.add(dateBox);
+
+        // Use JTextField for date input
+        JTextField dateField = new JTextField(10);
+        detailsPanel.add(dateField);
 
         // Event time
         JLabel timeLabel = new JLabel("Time: ");
         detailsPanel.add(timeLabel);
-        JComboBox<String> timeBox = new JComboBox<>(); 
-        detailsPanel.add(timeBox);
 
-        // Event course (assuming this is relevant)
+        // Use JTextField for time input
+        JTextField timeField = new JTextField(10);
+        detailsPanel.add(timeField);
+
+        // Event course 
         JLabel courseLabel = new JLabel("Course: ");
         detailsPanel.add(courseLabel);
-        JTextField dateField = new JTextField(); // Consider renaming to courseField
-        dateField.setPreferredSize(new Dimension(200, 5));
-        detailsPanel.add(dateField);
+        JTextField courseField = new JTextField(); 
+        courseField.setPreferredSize(new Dimension(200, 5));
+        detailsPanel.add(courseField);
 
         // Event description
         JLabel descriptionLabel = new JLabel("Description: ");
         detailsPanel.add(descriptionLabel);
         JTextArea descriptionField = new JTextArea();
         descriptionField.setPreferredSize(new Dimension(200, 100));
+        descriptionField.setLineWrap(true);
         detailsPanel.add(descriptionField);
 
         // Event priority
