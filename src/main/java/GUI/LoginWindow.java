@@ -8,6 +8,8 @@ package GUI;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * This class represents the login window for the application.
@@ -69,5 +71,61 @@ public class LoginWindow {
         frame.pack();
         frame.setSize(500, 300);
         frame.setVisible(true);
+        
+        
+        // Add action listener to the login button
+        loginButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e)
+ {
+                // Get username and password from the fields
+                String username = usernameField.getText();
+                char[] passwordChars = passwordField.getPassword();
+                String password = new String(passwordChars);
+
+                // Perform authentication (replace with your actual authentication logic)
+                if (authenticateUser(username, password)) {
+                    // If authentication is successful, close the LoginWindow and open MainInterface
+                    frame.dispose();
+                    new MainInterface(); 
+                } else {
+                    // If authentication fails, display an error message
+                    JOptionPane.showMessageDialog(frame, "Invalid username or password", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+        signUpButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Close the LoginWindow and open CreateAccountWindow
+                frame.dispose();
+                new CreateAccountWindow();
+            }
+        });
+        
+    }
+    
+
+
+    /**
+     * Simulates user authentication. Replace this with your actual authentication logic.
+     *
+     * @param username The entered username.
+     * @param password The entered password.
+     * @return true if authentication is successful, false otherwise.
+     */
+    private boolean authenticateUser(String username, String password) {
+        // Replace this with your actual authentication logic
+        // For now, let's just check if both fields are non-empty
+        return !username.isEmpty() && !password.isEmpty(); 
+    }
+
+    /**
+     * Main method to start the application with the LoginWindow.
+     *
+     * @param args Command line arguments (not used).
+     */
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> new LoginWindow());
     }
 }
