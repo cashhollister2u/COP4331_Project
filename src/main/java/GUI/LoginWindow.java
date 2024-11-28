@@ -6,6 +6,7 @@
 
 package GUI;
 
+import DataStorage.PlannerSystem;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -24,52 +25,58 @@ public class LoginWindow {
      */
     public LoginWindow() {
         // Initialize JFrame with GridLayout
-        JFrame frame = new JFrame();
-        frame.setLayout(new GridLayout(3, 1));
-
-        // Create and set up header panel
-        JPanel headerPanel = new JPanel();
-        headerPanel.setLayout(new GridLayout(2, 1));
-
-        JLabel title = new JLabel("Planner Application");
-        headerPanel.add(title);
+        JFrame frame = new JFrame("Planner Application");
+        frame.setLayout(new GridLayout(4, 1));
 
         JLabel prompt = new JLabel("Login:");
-        headerPanel.add(prompt);
 
-        // Create and set up field panel
-        JPanel fieldPanel = new JPanel();
-        fieldPanel.setLayout(new BoxLayout(fieldPanel, BoxLayout.Y_AXIS));
+        // Create and set up field panels
+        JPanel usernamePanel = new JPanel();
+        usernamePanel.setLayout(new BoxLayout(usernamePanel, BoxLayout.X_AXIS));
+        JPanel passwordPanel = new JPanel();
+        passwordPanel.setLayout(new BoxLayout(passwordPanel, BoxLayout.X_AXIS));
 
+        // create text input components 
         JLabel usernameLabel = new JLabel("Username:");
-        fieldPanel.add(usernameLabel);
         JTextField usernameField = new JTextField();
-        fieldPanel.add(usernameField);
-
         JLabel passwordLabel = new JLabel("Password:");
-        fieldPanel.add(passwordLabel);
         JPasswordField passwordField = new JPasswordField(); // Changed to JPasswordField for passwords
-        fieldPanel.add(passwordField);
+        
+        //add to field panel
+        usernamePanel.add(usernameLabel);
+        usernamePanel.add(usernameField);
+        passwordPanel.add(passwordLabel);
+        passwordPanel.add(passwordField);
+        
+        // Set maximum size
+        Dimension fieldSize = new Dimension(400, 30);
+        usernameField.setMaximumSize(fieldSize);
+        passwordField.setMaximumSize(fieldSize);
+        
 
         // Create and set up button panel
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
-
+        
+        // create button components
         JButton loginButton = new JButton("Login");
-        buttonPanel.add(loginButton);
-
         JButton signUpButton = new JButton("Sign-Up");
+        
+        // add to button panel
+        buttonPanel.add(loginButton);
         buttonPanel.add(signUpButton);
-
+        
+        
         // Add panels to the frame
-        frame.add(headerPanel);
-        frame.add(fieldPanel);
-        frame.add(buttonPanel);
+        frame.add(prompt, BorderLayout.NORTH);
+        frame.add(usernamePanel, BorderLayout.CENTER);
+        frame.add(passwordPanel, BorderLayout.CENTER);
+        frame.add(buttonPanel, BorderLayout.SOUTH);
 
         // Set frame properties and display
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.pack();
-        frame.setSize(500, 300);
+        frame.setSize(500,300);
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
         
         
@@ -82,12 +89,15 @@ public class LoginWindow {
                 String username = usernameField.getText();
                 char[] passwordChars = passwordField.getPassword();
                 String password = new String(passwordChars);
-
+                
+                PlannerSystem systemInstance = PlannerSystem.getInstance();
+                boolean validated = systemInstance.validateUser(username, password);
+                
                 // Perform authentication (replace with your actual authentication logic)
-                if (authenticateUser(username, password)) {
+                if (validated) {
                     // If authentication is successful, close the LoginWindow and open MainInterface
                     frame.dispose();
-                    new MainInterface(); 
+                    new CalendarWindow(); 
                 } else {
                     // If authentication fails, display an error message
                     JOptionPane.showMessageDialog(frame, "Invalid username or password", "Error", JOptionPane.ERROR_MESSAGE);
@@ -103,21 +113,6 @@ public class LoginWindow {
             }
         });
         
-    }
-    
-
-
-    /**
-     * Simulates user authentication. Replace this with actual authentication logic.
-     *
-     * @param username The entered username.
-     * @param password The entered password.
-     * @return true if authentication is successful, false otherwise.
-     */
-    private boolean authenticateUser(String username, String password) {
-        // Replace this with actual authentication logic
-        // For now, just checks if both fields are non-empty
-        return !username.isEmpty() && !password.isEmpty(); 
     }
 
     /**

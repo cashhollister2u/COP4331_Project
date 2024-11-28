@@ -5,12 +5,14 @@
 
 package GUI;
 
+import DataStorage.PlannerSystem;
+import DataStorage.UserAccount;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * This class represents the window for creating a new user account.
@@ -25,52 +27,61 @@ public class CreateAccountWindow {
      */
     public CreateAccountWindow() {
         // Initialize JFrame with GridLayout
-        JFrame frame = new JFrame();
-        frame.setLayout(new GridLayout(3, 1));
-
-        // Create and set up header panel
-        JPanel headerPanel = new JPanel();
-        headerPanel.setLayout(new GridLayout(2, 1));
-
-        JLabel title = new JLabel("Planner Application");
-        headerPanel.add(title);
+        JFrame frame = new JFrame("Planner Application");
+        frame.setLayout(new GridLayout(4, 1));
 
         JLabel prompt = new JLabel("Sign-Up:");
-        headerPanel.add(prompt);
 
+        
         // Create and set up field panel
-        JPanel fieldPanel = new JPanel();
-        fieldPanel.setLayout(new BoxLayout(fieldPanel, BoxLayout.Y_AXIS));
+        JPanel usernamePanel = new JPanel();
+        usernamePanel.setLayout(new BoxLayout(usernamePanel, BoxLayout.X_AXIS));
+        JPanel passwordPanel = new JPanel();
+        passwordPanel.setLayout(new BoxLayout(passwordPanel, BoxLayout.X_AXIS));
 
+        // create text input components 
         JLabel usernameLabel = new JLabel("Username:");
-        fieldPanel.add(usernameLabel);
         JTextField usernameField = new JTextField();
-        fieldPanel.add(usernameField);
-
         JLabel passwordLabel = new JLabel("Password:");
-        fieldPanel.add(passwordLabel);
-        JPasswordField passwordField = new JPasswordField(); // Use JPasswordField for passwords
-        fieldPanel.add(passwordField);
-
+        JPasswordField passwordField = new JPasswordField(); // Changed to JPasswordField for passwords
+        
+        //add to field panel
+        usernamePanel.add(usernameLabel);
+        usernamePanel.add(usernameField);
+        passwordPanel.add(passwordLabel);
+        passwordPanel.add(passwordField);
+        
+        // Set maximum size
+        Dimension fieldSize = new Dimension(400, 30);
+        usernameField.setMaximumSize(fieldSize);
+        passwordField.setMaximumSize(fieldSize);
+        
+        
         // Create and set up button panel
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
-
+        
+        // create button components
         JButton createAccountButton = new JButton("Create Account");
-        buttonPanel.add(createAccountButton);
-
         JButton loginButton = new JButton("Return to Login");
+        
+        // add to button panel
+        buttonPanel.add(createAccountButton);
         buttonPanel.add(loginButton);
-
+        
+        
         // Add panels to the frame
-        frame.add(headerPanel);
-        frame.add(fieldPanel);
-        frame.add(buttonPanel);
+        frame.add(prompt, BorderLayout.NORTH);
+        frame.add(usernamePanel, BorderLayout.CENTER);
+        frame.add(passwordPanel, BorderLayout.CENTER);
+        frame.add(buttonPanel, BorderLayout.SOUTH);
 
-        // Set frame properties
+        // Set frame properties and display
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.pack();
-        frame.setSize(500, 300);
+        frame.setSize(500,300);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+    
 
         // Add action listener to the "Create Account" button
         createAccountButton.addActionListener(new ActionListener() {
@@ -81,7 +92,12 @@ public class CreateAccountWindow {
                 String password = new String(passwordChars);
 
                 // Save username and password (replace with preferred storage method)
-                saveCredentials(username, password);
+                PlannerSystem systemInstance = PlannerSystem.getInstance();
+                UserAccount newAccount = new UserAccount(username, password, new ArrayList<>());
+                systemInstance.saveUserAccount(newAccount);
+
+                System.out.println("Username: " + username);
+                System.out.println("Password: " + password);
 
                 // Close the CreateAccountWindow and open LoginWindow
                 frame.dispose();
@@ -98,23 +114,6 @@ public class CreateAccountWindow {
                 new LoginWindow();
             }
         });
-
-        // Display the frame
-        frame.setVisible(true);
     }
 
-    /**
-     * Saves the username and password.
-     * Replace this with actual credential storage logic.
-     *
-     * @param username The username to be saved.
-     * @param password The password to be saved.
-     */
-    private void saveCredentials(String username, String password) {
-        // Replace this with actual credential storage logic
-        // This might involve saving to a file, a database, or using another secure storage mechanism
-        // For now just prints the credentials to the console since unsure what we wanted
-        System.out.println("Username: " + username);
-        System.out.println("Password: " + password);
-    }
 }

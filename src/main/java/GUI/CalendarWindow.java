@@ -18,7 +18,7 @@ import java.awt.event.ActionListener;
  *
  * @author cashhollister, andrewcogins
  */
-public class CalendarWindow {
+public class CalendarWindow extends JFrame {
     private JPanel calendarPanel;
     private JPanel headerPanel;
 
@@ -26,48 +26,49 @@ public class CalendarWindow {
      * Constructs the CalendarWindow and initializes its components.
      */
     public CalendarWindow() {
+        this.setLayout(new BorderLayout());
+        this.setTitle("Calendar");
+        
+        // Add the taskbar panel to the west of the frame
+        TaskBar taskbarPanel = new TaskBar(this);
+        this.add(taskbarPanel, BorderLayout.WEST);
+        
         calendarPanel = new JPanel(new CardLayout());
 
         // Create header panel
         headerPanel = new JPanel();
         headerPanel.setLayout(new BoxLayout(headerPanel, BoxLayout.X_AXIS));
 
-        JPanel subHeaderPanel = new JPanel();
-        subHeaderPanel.setLayout(new BoxLayout(subHeaderPanel, BoxLayout.Y_AXIS));
-
-        JLabel headerLabel = new JLabel("Planner Application");
-        subHeaderPanel.add(headerLabel);
-        subHeaderPanel.add(Box.createVerticalStrut(20));
-
-        JLabel prompt = new JLabel("Calendar");
-        subHeaderPanel.add(prompt);
-
-        headerPanel.add(subHeaderPanel);
-
-        // Add buttons to header
+        
+        // button panel
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(1, 3));
-
+        
+        // create button panel components
         JButton todayButton = new JButton("Today");
-        buttonPanel.add(todayButton);
-
         JButton weekButton = new JButton("Week");
-        buttonPanel.add(weekButton);
-
         JButton monthButton = new JButton("Month");
+        
+        // add componenets to button panel
+        buttonPanel.add(todayButton);
+        buttonPanel.add(weekButton);
         buttonPanel.add(monthButton);
-
+        
+        // add button panel to header panel
         headerPanel.add(buttonPanel);
 
         // Create containers for different calendar views
+        // month container
         JPanel calendarContainerPanel = new JPanel(new FlowLayout());
         JPanel calendarCompsPanel = new JPanel(new GridLayout(5, 7));
         calendarContainerPanel.add(calendarCompsPanel);
-
+        
+        // week container
         JPanel weekContainerPanel = new JPanel(new FlowLayout());
         JPanel weekCompsPanel = new JPanel(new GridLayout(1, 7));
         weekContainerPanel.add(weekCompsPanel);
-
+        
+        // day containter
         JPanel todayContainerPanel = new JPanel(new FlowLayout());
         JPanel todayCompsPanel = new JPanel(new GridLayout(1, 7));
         todayContainerPanel.add(todayCompsPanel);
@@ -102,7 +103,18 @@ public class CalendarWindow {
         // Button actions to switch views
         CardLayout cardLayout = (CardLayout) calendarPanel.getLayout();
         cardLayout.show(calendarPanel, "Month"); // Initially show the "Month" view
-
+        
+        
+        // frame settings
+        this.add(calendarPanel, BorderLayout.CENTER);
+        this.add(headerPanel, BorderLayout.NORTH);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.pack();
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
+        
+        
+        // action listeners
         todayButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -123,23 +135,5 @@ public class CalendarWindow {
                 cardLayout.show(calendarPanel, "Month");
             }
         });
-    }
-
-    /**
-     * Returns the main calendar panel.
-     *
-     * @return The calendarPanel.
-     */
-    public JPanel getCalendarPanel() {
-        return calendarPanel;
-    }
-
-    /**
-     * Returns the header panel containing the calendar view buttons.
-     *
-     * @return The headerPanel.
-     */
-    public JPanel getHeaderPanel() {
-        return headerPanel;
     }
 }
