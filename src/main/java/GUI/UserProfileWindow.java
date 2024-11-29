@@ -111,6 +111,8 @@ public class UserProfileWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 systemInstance.deleteAccount();
+                dispose();
+                new LoginWindow();
             }
         });
         // Add panels to the main panel

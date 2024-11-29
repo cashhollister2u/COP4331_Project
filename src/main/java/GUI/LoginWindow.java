@@ -97,7 +97,7 @@ public class LoginWindow {
                 if (validated) {
                     // If authentication is successful, close the LoginWindow and open MainInterface
                     frame.dispose();
-                    new CalendarWindow(); 
+                    new MainInterface(); 
                 } else {
                     // If authentication fails, display an error message
                     JOptionPane.showMessageDialog(frame, "Invalid username or password", "Error", JOptionPane.ERROR_MESSAGE);

@@ -5,12 +5,9 @@
 // MainInterface.java
 package GUI;
 
-import DataStorage.PlannerSystem;
-import DataStorage.UserAccount;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.util.Arrays;
 
 /**
  * This class represents the main interface of the planner application.
@@ -18,20 +15,49 @@ import java.awt.event.ActionListener;
  *
  * @author andrewcoggins
  */
-public class MainInterface {
-    private JFrame frame;
-    private JPanel contentPanel;
-    private CardLayout cardLayout;
-    private CalendarWindow calendarWindow;
-    private UserProfileWindow userProfileWindow;
-    private AddEventWindow addEventWindow;
-    PlannerSystem systemInstance = PlannerSystem.getInstance();
-    
+public class MainInterface extends JFrame{
 
     /**
      * Constructs the MainInterface and initializes its components.
      */
     public MainInterface() {
+        this.setLayout(new BorderLayout());
+        this.setTitle("Main Interface");
         
+        // Add the taskbar panel to the west of the frame
+        TaskBar taskbarPanel = new TaskBar(this);
+        this.add(taskbarPanel, BorderLayout.WEST);
+        // week container
+        JPanel weekContainerPanel = new JPanel(new FlowLayout());
+        JPanel weekCompsPanel = new JPanel(new GridLayout(1, 7));
+        weekContainerPanel.add(weekCompsPanel);
+        
+        // day containter
+        JPanel todayContainerPanel = new JPanel(new FlowLayout());
+        JPanel todayCompsPanel = new JPanel(new GridLayout(1, 7));
+        todayContainerPanel.add(todayCompsPanel);
+        
+        // Populate week components
+        java.util.List<String> weekDays = Arrays.asList(".  Sunday", ".  Monday", ".  Tuesday", ".  Wednesday", ".  Thursday", ".  Friday", ".  Saturday");
+        for (int x = 0; x < 7; x++) {
+            GridBox box = new GridBox(String.valueOf(x) + weekDays.get(x), 125, 800);
+            JLabel boxLabel = new JLabel(box);
+            weekCompsPanel.add(boxLabel);
+        }
+
+        // Populate Today components
+        for (int x = 0; x < 1; x++) {
+            GridBox box = new GridBox("Today", 575, 800);
+            JLabel boxLabel = new JLabel(box);
+            todayCompsPanel.add(boxLabel);
+        }
+        
+        // frame settings
+        this.add(todayContainerPanel, BorderLayout.CENTER);
+        this.add(weekContainerPanel, BorderLayout.EAST);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.pack();
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
     }
 }
