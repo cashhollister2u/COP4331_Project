@@ -19,7 +19,7 @@ import java.io.File;
  */
 public class PlannerSystem {
     private UserAccount userAccount;
-    // create an instance of Stdout that is accessed by users
+    // create an instance of PlannerSystem that is accessed by users
     private static PlannerSystem instance = new PlannerSystem();
     
     /**

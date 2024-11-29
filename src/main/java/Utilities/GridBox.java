@@ -5,72 +5,70 @@
 
 package Utilities;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
-import javax.swing.*;
 
 /**
- * This class implements a custom icon that displays a rectangle with a label.
- * It can be used to create grid-like layouts with labeled cells.
+ * Class utilized to create grid box calendar components
+ * @invariant border will always be black 
  *
  * @author cashhollister, andrewcoggins
  */
-public class GridBox implements Icon {
+public class GridBox extends JPanel {
     private Color color = Color.BLACK;
-    private Color textColor;
-    private int width;
-    private int height;
-    private String day;
-
+    private JPanel eventPanel;
+    private JScrollPane scrollPane;
+    
     /**
-     * Constructs a GridBox icon with the specified label, width, and height.
-     *
-     * @param day    The label to be displayed within the grid box.
-     * @param width  The width of the grid box.
-     * @param height The height of the grid box.
+     * Constructor Utilized to create GridBox
+     * @preconditions none
+     * @postconditions GridBox created
+     * @param width     
+     * @param height   
+     * @param dayString
      */
-    public GridBox(String day, int width, int height, Color textColor) {
-        this.day = day;
-        this.height = height;
-        this.width = width;
-        this.textColor = textColor;
+    public GridBox(JLabel dayString, int width, int height) {
+        setPreferredSize(new Dimension(width, height)); 
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
+        eventPanel = new JPanel();
+        eventPanel.setLayout(new BoxLayout(eventPanel, BoxLayout.Y_AXIS));
+        
+        eventPanel.add(dayString);
+        eventPanel.add(Box.createVerticalStrut(10)); 
+
+        scrollPane = new JScrollPane(eventPanel);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+
+        add(scrollPane, BorderLayout.CENTER);
     }
 
     /**
-     * {@inheritDoc}
+     * Public method to add events to the Event Panel
+     * @preconditions none
+     * @postconditions events added to eventPanel and are scrollable
+     * @param component 
+     */
+    public void addEvent(Component component) {
+        eventPanel.add(component);
+        eventPanel.revalidate(); // Revalidate to update the layout
+        eventPanel.repaint();
+    }
+
+    /**
+     * Public method utilized to pain the grid component
+     * @preconditions none
+     * @postconditions grid is painted
      */
     @Override
-    public int getIconWidth() {
-        return this.width;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int getIconHeight() {
-        return this.height;
-    }
-
-    /**
-     * Sets the color of the grid box.
-     *
-     * @param newColor The new color for the grid box.
-     */
-    public void setColor(Color newColor) {
-        this.color = newColor;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void paintIcon(Component c, Graphics g, int x, int y) {
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-        Rectangle2D.Double rectangle = new Rectangle2D.Double(x, y, width, height);
-        g2.setColor(this.color);
-        g2.draw(rectangle);
-        g2.setColor(this.textColor);
-        g2.drawString(day, 10, 20);
+
+        // Generate border 
+        g2.setColor(color);
+        g2.draw(new Rectangle2D.Double(0, 0, getWidth() - 1, getHeight() - 1)); 
     }
 }

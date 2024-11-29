@@ -102,6 +102,8 @@ public class UserProfileWindow extends JFrame {
                 String newUsername = usernameField.getText();
                 String newPassword = passwordField.getText();
                 systemInstance.changeUserCredentials(newUsername, newPassword);
+                dispose();
+                new UserProfileWindow();
                 JOptionPane.showMessageDialog(userProfilePanel, "New Username:Password is " + newUsername  + ":" + newPassword, "Information", JOptionPane.INFORMATION_MESSAGE);
             }
         });

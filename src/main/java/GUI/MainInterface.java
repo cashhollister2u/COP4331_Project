@@ -7,6 +7,11 @@ package GUI;
 
 import Utilities.GridBox;
 import Utilities.CurrentMonth;
+import Utilities.WeekEvent;
+import Utilities.DayEvent;
+import DataStorage.Event;
+import DataStorage.PlannerSystem;
+import DataStorage.UserAccount;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,7 +24,10 @@ import java.util.List;
  * @author andrewcoggins
  */
 public class MainInterface extends JFrame{
-
+    private PlannerSystem systemInstance = PlannerSystem.getInstance();
+    private UserAccount userAccount = systemInstance.getUserAccount();
+    private List<Event> accountEvents = userAccount.getEvents();
+    
     /**
      * Constructs the MainInterface and initializes its components.
      */
@@ -48,24 +56,29 @@ public class MainInterface extends JFrame{
         String todayDate = currentMonth.getTodayDate();
         for (int x = 0; x < weekDays.size(); x++) {
             String currDate = weekDays.get(x);
-            Color dateColor = Color.BLACK;
+            JLabel dateString = new JLabel(currDate);
             
             // change color based on current day
             if (currDate.substring(0,2).equals(todayDate)) {
-                dateColor = Color.RED;
+                dateString.setForeground(Color.BLUE);
+
             }
             
             // generate grid box for each day
-            GridBox box = new GridBox(currDate, 150, 800, dateColor);
-            JLabel boxLabel = new JLabel(box);
-            weekCompsPanel.add(boxLabel);
+            GridBox box = new GridBox(dateString, 150, 800);
+            
+            // assign events to day of week
+            assignWeekEvents(currDate, box);
+            
+            weekCompsPanel.add(box);
         }
 
         // Populate Today components
         String today = currentMonth.getToday();
-        GridBox box = new GridBox(today, 400, 800, Color.BLACK);
-        JLabel boxLabel = new JLabel(box);
-        todayCompsPanel.add(boxLabel);
+        JLabel dateString = new JLabel(today);
+        GridBox box = new GridBox(dateString, 450, 800);
+        assignTodayEvents(today, box);
+        todayCompsPanel.add(box);
         
         // frame settings
         this.add(todayContainerPanel, BorderLayout.CENTER);
@@ -74,5 +87,29 @@ public class MainInterface extends JFrame{
         this.pack();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
+    }
+    
+    private void assignWeekEvents(String currDay, GridBox box) {
+        String currDate = currDay.substring(0, 2);
+        
+        for (Event event : this.accountEvents) {
+            String eventDate = event.getDate().toString().substring(8,10); 
+            if (currDate.equals(eventDate)){
+                WeekEvent weekEvent = new WeekEvent(event, this);
+                box.addEvent(weekEvent);
+            }
+        }
+    }
+    
+    private void assignTodayEvents(String currDay, GridBox box) {
+        String currDate = currDay.substring(0, 2);
+        
+        for (Event event : this.accountEvents) {
+            String eventDate = event.getDate().toString().substring(8,10); 
+            if (currDate.equals(eventDate)){
+                DayEvent dayEvent = new DayEvent(event, this);
+                box.addEvent(dayEvent);
+            }
+        }
     }
 }

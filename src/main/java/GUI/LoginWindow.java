@@ -113,13 +113,4 @@ public class LoginWindow {
         });
         
     }
-
-    /**
-     * Main method to start the application with the LoginWindow.
-     *
-     * @param args Command line arguments (not used).
-     */
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new LoginWindow());
-    }
 }

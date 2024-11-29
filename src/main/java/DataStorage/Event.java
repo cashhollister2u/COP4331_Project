@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package DataStorage;
-import java.time.LocalTime;
+import java.io.Serializable;
 import java.time.LocalDate;
 
 /**
@@ -11,7 +11,7 @@ import java.time.LocalDate;
  * @invariant types of instance variable will be constant
  * @author cashhollister
  */
-public class Event {
+public class Event implements Serializable {
     private String title;
     private LocalDate date;
     private String time;

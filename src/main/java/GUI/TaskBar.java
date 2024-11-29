@@ -24,19 +24,21 @@ public class TaskBar extends JPanel{
         
         // Create the taskbar panel
         JPanel taskbarPanel = new JPanel();
-        taskbarPanel.setLayout(new GridLayout(4, 1));
+        taskbarPanel.setLayout(new GridLayout(5, 1));
 
         // Create taskbar buttons
         JButton homeButton = new JButton("Main Interface");
         JButton userProfileButton = new JButton("User Profile");
         JButton addEventsButton = new JButton("Add Events");
         JButton calendarButton = new JButton("Calendar");
+        JButton logoutButton = new JButton("Logout");
 
         // Add buttons to the taskbar panel
         taskbarPanel.add(homeButton);
         taskbarPanel.add(userProfileButton);
         taskbarPanel.add(addEventsButton);
         taskbarPanel.add(calendarButton);
+        taskbarPanel.add(logoutButton);
         
         this.add(taskbarPanel);
         
@@ -72,5 +74,14 @@ public class TaskBar extends JPanel{
                 new CalendarWindow();
             }
         });
+        
+        logoutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                currentFrame.dispose();
+                new LoginWindow();
+            }
+        });
     }
+    
 }

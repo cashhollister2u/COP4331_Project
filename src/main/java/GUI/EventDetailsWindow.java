@@ -5,107 +5,99 @@
 
 package GUI;
 
+import DataStorage.PlannerSystem;
+import DataStorage.UserAccount;
+import DataStorage.Event;
+
 import javax.swing.*;
 import java.awt.*;
-import java.util.Date;
-import java.time.LocalTime;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * This class represents the window for displaying detailed information about an event.
  *
  * @author cashhollister, andrewcoggins
  */
-public class EventDetailsWindow {
-
+public class EventDetailsWindow extends JFrame {
+    private JPanel detailsPanel;
     /**
-     * Constructs the EventDetailsWindow and initializes its components with the provided event details.
-     *
-     * @param title       The title of the event.
-     * @param date        The date of the event.
-     * @param time        The time of the event.
-     * @param course      The course associated with the event (if applicable).
-     * @param description The description of the event.
-     * @param priority    The priority of the event.
-     * @param status      The status of the event.
-     * @param complete    Indicates if the event is complete.
-     * @param conflict    Indicates if there is a conflict with the event.
+     * Constructor to generate an Event Details Window
+     * @precondtions none
+     * @postconditions Window generated
+     * @param event
      */
-    public EventDetailsWindow(String title, Date date, LocalTime time, String course, String description,
-                              String priority, boolean status, boolean complete, boolean conflict) {
-
-        // Initialize JFrame
-        JFrame frame = new JFrame();
-        frame.setLayout(new BorderLayout());
-
-        // Create header panel
-        JPanel headerPanel = new JPanel();
-        headerPanel.setLayout(new BoxLayout(headerPanel, BoxLayout.Y_AXIS));
-
-        JLabel headerLabel = new JLabel("Planner Application");
-        headerPanel.add(headerLabel);
-        headerPanel.add(Box.createVerticalStrut(20));
-
-        JLabel prompt = new JLabel("Event Details:"); // Changed from "Add New Event:"
-        headerPanel.add(prompt);
-        headerPanel.add(Box.createVerticalStrut(20));
-
-        // Create details panel
-        JPanel detailsPanel = new JPanel();
+    public EventDetailsWindow(Event event, JFrame frame) {
+        setLayout(new BorderLayout());
+        setTitle("Event Details");
+        
+        detailsPanel = new JPanel();
         detailsPanel.setLayout(new BoxLayout(detailsPanel, BoxLayout.Y_AXIS));
-        detailsPanel.add(Box.createVerticalStrut(40));
+        
+        // generate labels for each detail
+        JLabel title = new JLabel(event.getTitle());
+        JLabel course = new JLabel(event.getCourse());
+        JLabel time = new JLabel(event.getTime());
+        JLabel description = new JLabel(event.getDescription());
+        JLabel priority = new JLabel(event.getPriority());
+        JLabel status = new JLabel(event.getStatus());
 
-        // Add event details labels
-        JLabel titleLabel = new JLabel("Title: " + title);
-        detailsPanel.add(titleLabel);
-        detailsPanel.add(Box.createVerticalStrut(20));
 
-        JLabel dateLabel = new JLabel("Date: " + date.toString());
-        detailsPanel.add(dateLabel);
-        detailsPanel.add(Box.createVerticalStrut(20));
-
-        JLabel timeLabel = new JLabel("Time: " + time.toString());
-        detailsPanel.add(timeLabel);
-        detailsPanel.add(Box.createVerticalStrut(20));
-
-        JLabel courseLabel = new JLabel("Course: " + course);
-        detailsPanel.add(courseLabel);
-        detailsPanel.add(Box.createVerticalStrut(20));
-
-        JLabel descriptionLabel = new JLabel("Description: " + description);
-        detailsPanel.add(descriptionLabel);
-        detailsPanel.add(Box.createVerticalStrut(20));
-
-        JLabel priorityLabel = new JLabel("Priority: " + priority);
-        detailsPanel.add(priorityLabel);
-        detailsPanel.add(Box.createVerticalStrut(20));
-
-        JLabel statusLabel = new JLabel("Status: " + status);
-        detailsPanel.add(statusLabel);
-        detailsPanel.add(Box.createVerticalStrut(20));
-
-        JLabel completeLabel = new JLabel("Complete: " + complete);
-        detailsPanel.add(completeLabel);
-        detailsPanel.add(Box.createVerticalStrut(20));
-
-        JLabel conflictLabel = new JLabel("Conflict: " + conflict);
-        detailsPanel.add(conflictLabel);
-        detailsPanel.add(Box.createVerticalStrut(60));
-
-        // Add buttons
-        JButton editButton = new JButton("Edit Event");
-        detailsPanel.add(editButton);
-
+        // generate details button
         JButton deleteButton = new JButton("Delete Event");
+
+        // add detail labels
+        detailsPanel.add(title);
+        detailsPanel.add(course);
+        detailsPanel.add(time);
+        detailsPanel.add(description);
+        detailsPanel.add(priority);
+        detailsPanel.add(status);
+
+        // handle complete status
+        if (event.getComplete()) {
+            JLabel complete = new JLabel("Completed");
+            complete.setForeground(Color.GREEN);
+            detailsPanel.add(complete);
+        } else {
+            JLabel complete = new JLabel("Not Completed");
+            detailsPanel.add(complete);
+        }
+
+        // handle conflict status
+        if (event.getConflict()) {
+            JLabel conflict = new JLabel("Alert: Conflict with event");
+            conflict.setForeground(Color.RED);
+            detailsPanel.add(conflict);
+        } else {
+            JLabel conflict = new JLabel("No Conflicts with event");
+            detailsPanel.add(conflict);
+        }
+
+        // add details button
         detailsPanel.add(deleteButton);
 
-        // Add panels to frame
-        frame.add(headerPanel, BorderLayout.NORTH);
-        frame.add(detailsPanel);
-
-        // Set frame properties and display
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.pack();
-        frame.setSize(500, 650);
-        frame.setVisible(true);
+        // add space to bottom
+        detailsPanel.add(Box.createVerticalStrut(20));
+        
+        add(detailsPanel);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setSize(300,500);
+        setLocationRelativeTo(null);
+        setVisible(true);
+        
+        
+        deleteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                PlannerSystem systemInstance = PlannerSystem.getInstance();
+                UserAccount userAccount = systemInstance.getUserAccount();
+                userAccount.removeEvent(event);
+                systemInstance.saveUserAccount(userAccount);
+                dispose();
+                frame.dispose();
+                new MainInterface();
+            }
+        });
     }
 }

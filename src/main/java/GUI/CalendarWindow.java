@@ -5,11 +5,16 @@
 
 package GUI;
 
+import DataStorage.PlannerSystem;
+import DataStorage.UserAccount;
 import Utilities.CurrentMonth;
+import Utilities.DayEvent;
 import Utilities.GridBox;
+import Utilities.WeekEvent;
+import Utilities.MonthEvent;
+
 import javax.swing.*;
 import java.awt.*;
-import java.util.Arrays;
 import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,6 +27,9 @@ import java.time.LocalDate;
  * @author cashhollister, andrewcogins
  */
 public class CalendarWindow extends JFrame {
+    private PlannerSystem systemInstance = PlannerSystem.getInstance();
+    private UserAccount userAccount = systemInstance.getUserAccount();
+    private List<DataStorage.Event> accountEvents = userAccount.getEvents();
     private JPanel calendarPanel;
     private JPanel headerPanel;
 
@@ -84,41 +92,48 @@ public class CalendarWindow extends JFrame {
         List<LocalDate> monthDates = currentMonth.getDates();
         for (int x = 0; x < monthDates.size(); x++) {
             String currDate = monthDates.get(x).toString().substring(8,10);
-            Color dateColor = Color.BLACK;
+            JLabel dateString = new JLabel(currDate);
             
             // change color based on current day
             if (currDate.substring(0,2).equals(todayDate)) {
-                dateColor = Color.RED;
+                dateString.setForeground(Color.BLUE);
             }
             
             // generate grid box for each day
-            GridBox box = new GridBox(currDate, 150, 150, dateColor);
-            JLabel boxLabel = new JLabel(box);
-            calendarCompsPanel.add(boxLabel);
+            GridBox box = new GridBox(dateString, 150, 150);
+            
+            // assign events to day of month
+            assignMonthEvents(currDate, box);
+            
+            calendarCompsPanel.add(box);
         }
         
         // Populate week components
         List<String> weekDays = currentMonth.getCurrentWeek();
         for (int x = 0; x < weekDays.size(); x++) {
             String currDate = weekDays.get(x);
-            Color dateColor = Color.BLACK;
+            JLabel dateString = new JLabel(currDate);
             
             // change color based on current day
             if (currDate.substring(0,2).equals(todayDate)) {
-                dateColor = Color.RED;
+                dateString.setForeground(Color.BLUE);
             }
             
             // generate grid box for each day
-            GridBox box = new GridBox(currDate, 175, 800, dateColor);
-            JLabel boxLabel = new JLabel(box);
-            weekCompsPanel.add(boxLabel);
+            GridBox box = new GridBox(dateString, 150, 800);
+            
+            // assign events to day of week
+            assignWeekEvents(currDate, box);
+            
+            weekCompsPanel.add(box);
         }
 
         // Populate Today components
         String today = currentMonth.getToday();
-        GridBox box = new GridBox(today, 575, 800, Color.BLACK);
-        JLabel boxLabel = new JLabel(box);
-        todayCompsPanel.add(boxLabel);
+        JLabel dateString = new JLabel(today);
+        GridBox box = new GridBox(dateString, 450, 800);
+        assignTodayEvents(today, box);
+        todayCompsPanel.add(box);
 
         // Add calendar view containers to main panel
         calendarPanel.add(todayContainerPanel, "Today");
@@ -160,5 +175,41 @@ public class CalendarWindow extends JFrame {
                 cardLayout.show(calendarPanel, "Month");
             }
         });
+    }
+    
+    private void assignMonthEvents(String currDay, GridBox box) {
+        String currDate = currDay.substring(0, 2);
+        
+        for (DataStorage.Event event : this.accountEvents) {
+            String eventDate = event.getDate().toString().substring(8,10); 
+            if (currDate.equals(eventDate)){
+                MonthEvent monthEvent = new MonthEvent(event, this);
+                box.addEvent(monthEvent);
+            }
+        }
+    }
+    
+    private void assignWeekEvents(String currDay, GridBox box) {
+        String currDate = currDay.substring(0, 2);
+        
+        for (DataStorage.Event event : this.accountEvents) {
+            String eventDate = event.getDate().toString().substring(8,10); 
+            if (currDate.equals(eventDate)){
+                WeekEvent weekEvent = new WeekEvent(event, this);
+                box.addEvent(weekEvent);
+            }
+        }
+    }
+    
+    private void assignTodayEvents(String currDay, GridBox box) {
+        String currDate = currDay.substring(0, 2);
+        
+        for (DataStorage.Event event : this.accountEvents) {
+            String eventDate = event.getDate().toString().substring(8,10); 
+            if (currDate.equals(eventDate)){
+                DayEvent dayEvent = new DayEvent(event, this);
+                box.addEvent(dayEvent);
+            }
+        }
     }
 }
