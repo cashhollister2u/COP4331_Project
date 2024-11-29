@@ -4,7 +4,7 @@
  */
 package DataStorage;
 import java.time.LocalTime;
-import java.util.Date;
+import java.time.LocalDate;
 
 /**
  * Class utilized to store Event data
@@ -13,12 +13,12 @@ import java.util.Date;
  */
 public class Event {
     private String title;
-    private Date date;
-    private LocalTime time;
+    private LocalDate date;
+    private String time;
     private String course;
     private String description;
     private String priority;
-    private boolean status;
+    private String status;
     private boolean complete;
     private boolean conflict;
    /**
@@ -35,8 +35,8 @@ public class Event {
     * @param complete
     * @param conflict 
     */
-    public Event(String title, Date date, LocalTime time, String course, String description, 
-            String priority, boolean status, boolean complete, boolean conflict) {
+    public Event(String title, LocalDate date, String time, String course, String description, 
+            String priority, String status, boolean complete, boolean conflict) {
         this.title = title;
         this.date = date;
         this.time = time;
@@ -56,8 +56,8 @@ public class Event {
      * @return Boolean 
      */
     public boolean checkConflict(Event other) {
-        Date otherDate = other.getDate();
-        LocalTime otherTime = other.getTime();
+        LocalDate otherDate = other.getDate();
+        String otherTime = other.getTime();
         
         return !(otherDate == this.date && otherTime == this.time);
     } 
@@ -78,7 +78,7 @@ public class Event {
      * @postconditions date changed for Event
      * @param newDate 
      */
-    public void setDate(Date newDate) {
+    public void setDate(LocalDate newDate) {
         this.date = newDate;
     }
     
@@ -88,7 +88,7 @@ public class Event {
      * @postconditions time changed for Event
      * @param newTime 
      */
-    public void setTime(LocalTime newTime) {
+    public void setTime(String newTime) {
         this.time = newTime;
     }
     
@@ -128,7 +128,7 @@ public class Event {
      * @postconditions status changed for Event
      * @param newStatus 
      */
-    public void setStatus(boolean newStatus) {
+    public void setStatus(String newStatus) {
         this.status = newStatus;
     }
     
@@ -168,7 +168,7 @@ public class Event {
      * @postconditions date returned
      * @return Date date
      */
-    public Date getDate() {
+    public LocalDate getDate() {
         return this.date;
     }
     
@@ -178,7 +178,7 @@ public class Event {
      * @postconditions time returned
      * @return LocalTime time
      */
-    public LocalTime getTime() {
+    public String getTime() {
         return this.time;
     }
     
@@ -218,7 +218,7 @@ public class Event {
      * @postconditions status returned
      * @return Boolean status
      */
-    public boolean getStatus() {
+    public String getStatus() {
         return this.status;
     }
     

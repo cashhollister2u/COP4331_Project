@@ -114,14 +114,15 @@ public class PlannerSystem {
      * Public method utilized to save a UserAccount to the user_account.dat file
      * @preconditions valid UserAccount input
      * @postconditions user_account.dat file created with UserAccount
-     * @param userAccount 
+     * @param savedUserAccount 
      */
-    public void saveUserAccount(UserAccount userAccount) {
+    public void saveUserAccount(UserAccount savedUserAccount) {
         try{
             ObjectOutputStream out = new ObjectOutputStream(
                 new FileOutputStream("user_account.dat"));
-            out.writeObject(userAccount);
+            out.writeObject(savedUserAccount);
             out.close();
+            this.userAccount = savedUserAccount;
             System.out.println("Saved userAccount to .dat file ");
         } catch (IOException e) {
             System.out.println("Error: unable to write UserAccount to .dat file ");

@@ -4,8 +4,17 @@
  */
 package GUI;
 
+import DataStorage.PlannerSystem;
+import DataStorage.UserAccount;
+import DataStorage.Event;
+import Utilities.CurrentMonth;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.util.List;
 
 /**
  * This class represents the window for adding new events to the calendar.
@@ -68,10 +77,10 @@ public class AddEventWindow extends JFrame {
         JTextField titleField = new JTextField();
         // Event date
         JLabel dateLabel = new JLabel("Date: ");
-        JTextField dateField = new JTextField(10);
+        JComboBox<LocalDate> dateComboBox = new JComboBox<>();
         // Event time
         JLabel timeLabel = new JLabel("Time: ");
-        JTextField timeField = new JTextField(10);
+        JComboBox<String> timeComboBox = new JComboBox<>();
         // Event course 
         JLabel courseLabel = new JLabel("Course: ");
         JTextField courseField = new JTextField();
@@ -81,10 +90,10 @@ public class AddEventWindow extends JFrame {
         descriptionField.setLineWrap(true);
         // Event priority
         JLabel priorityLabel = new JLabel("Priority: ");
-        JCheckBox priorityBox = new JCheckBox();
+        JComboBox<String> priorityComboBox = new JComboBox<>();
         // Event status
         JLabel statusLabel = new JLabel("Status: ");
-        JCheckBox statusBox = new JCheckBox();
+        JComboBox<String> statusComboBox = new JComboBox<>();
         // Event completion status
         JLabel completeLabel = new JLabel("Complete: ");
         JCheckBox completeBox = new JCheckBox();
@@ -92,21 +101,49 @@ public class AddEventWindow extends JFrame {
         JLabel conflictLabel = new JLabel("Conflict: ");
         JCheckBox conflictBox = new JCheckBox();
         
+        
+        // init CurrentMonth object
+        CurrentMonth currentMonth = new CurrentMonth();
+        // add dates to combo box
+        List<LocalDate> dateList = currentMonth.getDates();
+        for (LocalDate date : dateList) {
+            dateComboBox.addItem(date);
+        }
+        
+        // add times to combo box
+        List<String> timeList = currentMonth.getTimes();
+        for (String specificTime : timeList) {
+            timeComboBox.addItem(specificTime);
+        }
+        
+        // add priorities to combo box
+        priorityComboBox.addItem("Low");
+        priorityComboBox.addItem("Moderate");
+        priorityComboBox.addItem("High");
+        
+        // add statuses to combo box
+        statusComboBox.addItem("Not Started");
+        statusComboBox.addItem("In Progress");
+        statusComboBox.addItem("Test and Analysis");
+        statusComboBox.addItem("Q and A");
+        statusComboBox.addItem("Complete");
+        
+        
         // add components to specific panels
         titlePanel.add(titleLabel);
         titlePanel.add(titleField);
         datePanel.add(dateLabel);
-        datePanel.add(dateField);
+        datePanel.add(dateComboBox);
         timePanel.add(timeLabel);
-        timePanel.add(timeField);
+        timePanel.add(timeComboBox);
         coursePanel.add(courseLabel);
         coursePanel.add(courseField);
         descriptionPanel.add(descriptionLabel);
         descriptionPanel.add(descriptionField);
         priorityPanel.add(priorityLabel);
-        priorityPanel.add(priorityBox);
+        priorityPanel.add(priorityComboBox);
         statusPanel.add(statusLabel);
-        statusPanel.add(statusBox);
+        statusPanel.add(statusComboBox);
         completePanel.add(completeLabel);
         completePanel.add(completeBox);
         conflictPanel.add(conflictLabel);
@@ -128,15 +165,17 @@ public class AddEventWindow extends JFrame {
         Dimension fieldSize = new Dimension(400, 30);
         Dimension descriptionSize = new Dimension(400, 120);
         titleField.setMaximumSize(fieldSize);
-        dateField.setMaximumSize(fieldSize);
-        timeField.setMaximumSize(fieldSize);
+        dateComboBox.setMaximumSize(fieldSize);
+        timeComboBox.setMaximumSize(fieldSize);
+        priorityComboBox.setMaximumSize(fieldSize);
+        statusComboBox.setMaximumSize(fieldSize);
         courseField.setMaximumSize(fieldSize);
         descriptionField.setMaximumSize(descriptionSize);
         
                 
         // Submit button
-        JButton submitButton = new JButton("Add Event");
-        detailsPanel.add(submitButton);
+        JButton addEvent = new JButton("Add Event");
+        detailsPanel.add(addEvent);
 
         // Add panels to main panel
         addEventPanel.add(headerPanel, BorderLayout.NORTH);
@@ -148,5 +187,38 @@ public class AddEventWindow extends JFrame {
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
+        
+        addEvent.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                PlannerSystem systemInstance = PlannerSystem.getInstance();
+                UserAccount userAccount = systemInstance.getUserAccount();
+                
+                //get event inputs
+                String eventTitle = titleField.getText();
+                LocalDate eventDate = (LocalDate) dateComboBox.getSelectedItem();
+                String eventTime = (String) timeComboBox.getSelectedItem();
+                String eventCourse = courseField.getText();
+                String eventDescription = descriptionField.getText();
+                String eventPriority = (String) priorityComboBox.getSelectedItem();
+                String eventStatus = (String) statusComboBox.getSelectedItem();
+                boolean isEventComplete = completeBox.isSelected();
+                boolean isEventConflict = conflictBox.isSelected();
+                
+                // create Event object w/ inputs
+                Event newEvent = new Event(eventTitle, eventDate, eventTime, eventCourse, eventDescription, 
+                        eventPriority, eventStatus, isEventComplete, isEventConflict);
+                
+                // add event to stored UserAccount instance
+                userAccount.addEvent(newEvent);
+                
+                // save account update to the system
+                systemInstance.saveUserAccount(userAccount);
+                
+                dispose();
+                
+                new MainInterface();
+            }
+        });
     }
 }

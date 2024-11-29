@@ -5,12 +5,15 @@
 
 package GUI;
 
+import Utilities.CurrentMonth;
+import Utilities.GridBox;
 import javax.swing.*;
 import java.awt.*;
 import java.util.Arrays;
 import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 
 /**
  * This class represents the calendar window, providing a user interface
@@ -73,27 +76,49 @@ public class CalendarWindow extends JFrame {
         JPanel todayCompsPanel = new JPanel(new GridLayout(1, 7));
         todayContainerPanel.add(todayCompsPanel);
 
+        // init CurrentMonth Object
+        CurrentMonth currentMonth = new CurrentMonth();
+        String todayDate = currentMonth.getTodayDate();
+        
         // Populate calendar components
-        for (int x = 0; x < 31; x++) {
-            GridBox box = new GridBox(String.valueOf(x), 150, 150);
+        List<LocalDate> monthDates = currentMonth.getDates();
+        for (int x = 0; x < monthDates.size(); x++) {
+            String currDate = monthDates.get(x).toString().substring(8,10);
+            Color dateColor = Color.BLACK;
+            
+            // change color based on current day
+            if (currDate.substring(0,2).equals(todayDate)) {
+                dateColor = Color.RED;
+            }
+            
+            // generate grid box for each day
+            GridBox box = new GridBox(currDate, 150, 150, dateColor);
             JLabel boxLabel = new JLabel(box);
             calendarCompsPanel.add(boxLabel);
         }
-
+        
         // Populate week components
-        List<String> weekDays = Arrays.asList(".  Sunday", ".  Monday", ".  Tuesday", ".  Wednesday", ".  Thursday", ".  Friday", ".  Saturday");
-        for (int x = 0; x < 7; x++) {
-            GridBox box = new GridBox(String.valueOf(x) + weekDays.get(x), 150, 800);
+        List<String> weekDays = currentMonth.getCurrentWeek();
+        for (int x = 0; x < weekDays.size(); x++) {
+            String currDate = weekDays.get(x);
+            Color dateColor = Color.BLACK;
+            
+            // change color based on current day
+            if (currDate.substring(0,2).equals(todayDate)) {
+                dateColor = Color.RED;
+            }
+            
+            // generate grid box for each day
+            GridBox box = new GridBox(currDate, 175, 800, dateColor);
             JLabel boxLabel = new JLabel(box);
             weekCompsPanel.add(boxLabel);
         }
 
         // Populate Today components
-        for (int x = 0; x < 1; x++) {
-            GridBox box = new GridBox("Today", 800, 800);
-            JLabel boxLabel = new JLabel(box);
-            todayCompsPanel.add(boxLabel);
-        }
+        String today = currentMonth.getToday();
+        GridBox box = new GridBox(today, 575, 800, Color.BLACK);
+        JLabel boxLabel = new JLabel(box);
+        todayCompsPanel.add(boxLabel);
 
         // Add calendar view containers to main panel
         calendarPanel.add(todayContainerPanel, "Today");

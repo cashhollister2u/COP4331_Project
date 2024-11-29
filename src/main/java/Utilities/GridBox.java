@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
-package GUI;
+package Utilities;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
@@ -17,6 +17,7 @@ import javax.swing.*;
  */
 public class GridBox implements Icon {
     private Color color = Color.BLACK;
+    private Color textColor;
     private int width;
     private int height;
     private String day;
@@ -28,10 +29,11 @@ public class GridBox implements Icon {
      * @param width  The width of the grid box.
      * @param height The height of the grid box.
      */
-    public GridBox(String day, int width, int height) {
+    public GridBox(String day, int width, int height, Color textColor) {
         this.day = day;
         this.height = height;
         this.width = width;
+        this.textColor = textColor;
     }
 
     /**
@@ -67,7 +69,8 @@ public class GridBox implements Icon {
         Graphics2D g2 = (Graphics2D) g;
         Rectangle2D.Double rectangle = new Rectangle2D.Double(x, y, width, height);
         g2.setColor(this.color);
-        g2.drawString(day, 10, 20);
         g2.draw(rectangle);
+        g2.setColor(this.textColor);
+        g2.drawString(day, 10, 20);
     }
 }

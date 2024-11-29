@@ -1,7 +1,9 @@
+Utilities/CurrentMonth.class
 GUI/LoginWindow$2.class
 GUI/TaskBar$2.class
 DataStorage/UserAccount.class
 GUI/CreateAccountWindow$2.class
+GUI/AddEventWindow$1.class
 GUI/UserProfileWindow$1.class
 DataStorage/Event.class
 GUI/TaskBar$1.class
@@ -9,6 +11,7 @@ GUI/LoginWindow$1.class
 DataStorage/PlannerSystem.class
 GUI/CreateAccountWindow$1.class
 GUI/TaskBar$3.class
+Utilities/GridBox.class
 GUI/TaskBar.class
 GUI/TaskBar$4.class
 GUI/UserProfileWindow$2.class

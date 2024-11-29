@@ -5,9 +5,12 @@
 // MainInterface.java
 package GUI;
 
+import Utilities.GridBox;
+import Utilities.CurrentMonth;
+
 import javax.swing.*;
 import java.awt.*;
-import java.util.Arrays;
+import java.util.List;
 
 /**
  * This class represents the main interface of the planner application.
@@ -37,20 +40,32 @@ public class MainInterface extends JFrame{
         JPanel todayCompsPanel = new JPanel(new GridLayout(1, 7));
         todayContainerPanel.add(todayCompsPanel);
         
+        // init CurrentMonth Object
+        CurrentMonth currentMonth = new CurrentMonth();
+        
         // Populate week components
-        java.util.List<String> weekDays = Arrays.asList(".  Sunday", ".  Monday", ".  Tuesday", ".  Wednesday", ".  Thursday", ".  Friday", ".  Saturday");
-        for (int x = 0; x < 7; x++) {
-            GridBox box = new GridBox(String.valueOf(x) + weekDays.get(x), 125, 800);
+        List<String> weekDays = currentMonth.getCurrentWeek();
+        String todayDate = currentMonth.getTodayDate();
+        for (int x = 0; x < weekDays.size(); x++) {
+            String currDate = weekDays.get(x);
+            Color dateColor = Color.BLACK;
+            
+            // change color based on current day
+            if (currDate.substring(0,2).equals(todayDate)) {
+                dateColor = Color.RED;
+            }
+            
+            // generate grid box for each day
+            GridBox box = new GridBox(currDate, 150, 800, dateColor);
             JLabel boxLabel = new JLabel(box);
             weekCompsPanel.add(boxLabel);
         }
 
         // Populate Today components
-        for (int x = 0; x < 1; x++) {
-            GridBox box = new GridBox("Today", 575, 800);
-            JLabel boxLabel = new JLabel(box);
-            todayCompsPanel.add(boxLabel);
-        }
+        String today = currentMonth.getToday();
+        GridBox box = new GridBox(today, 400, 800, Color.BLACK);
+        JLabel boxLabel = new JLabel(box);
+        todayCompsPanel.add(boxLabel);
         
         // frame settings
         this.add(todayContainerPanel, BorderLayout.CENTER);

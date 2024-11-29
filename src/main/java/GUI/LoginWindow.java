@@ -83,8 +83,7 @@ public class LoginWindow {
         // Add action listener to the login button
         loginButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e)
- {
+            public void actionPerformed(ActionEvent e) {
                 // Get username and password from the fields
                 String username = usernameField.getText();
                 char[] passwordChars = passwordField.getPassword();
