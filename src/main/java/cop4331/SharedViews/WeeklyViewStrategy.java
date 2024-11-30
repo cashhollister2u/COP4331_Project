@@ -19,6 +19,11 @@ import java.util.List;
  */
 
 public class WeeklyViewStrategy implements CalendarViewStrategy {
+    /**
+     * {@inheritDoc}
+     * 
+     * Creates and returns a JPanel representing the weekly calendar view.
+     */
     @Override
     public JPanel createCalendarView(JFrame frame) {
         JPanel weekContainerPanel = new JPanel(new FlowLayout());
