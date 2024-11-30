@@ -14,7 +14,7 @@ import java.awt.*;
 import java.util.List;
 
 /**
- *
+ * Concrete strategy for creating the weekly calendar view.
  * @author andrewcoggins
  */
 
