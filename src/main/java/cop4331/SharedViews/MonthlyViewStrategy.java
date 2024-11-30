@@ -16,7 +16,7 @@ import java.util.List;
 
 /**
  *
- * @author Andrew
+ * @author andrewcoggins
  */
 
 public class MonthlyViewStrategy implements CalendarViewStrategy {
