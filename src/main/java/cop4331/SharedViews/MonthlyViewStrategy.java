@@ -20,6 +20,11 @@ import java.util.List;
  */
 
 public class MonthlyViewStrategy implements CalendarViewStrategy {
+    /**
+     * {@inheritDoc}
+     * 
+     * Creates and returns a JPanel representing the monthly calendar view.
+     */
     @Override
     public JPanel createCalendarView(JFrame frame) {
         JPanel calendarContainerPanel = new JPanel(new FlowLayout());
