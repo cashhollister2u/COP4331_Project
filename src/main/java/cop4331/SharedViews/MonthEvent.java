@@ -22,12 +22,20 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
- *
+ * Class utilized to display events happening this month
+ * @invariant layouts will not change 
  * @author cashhollister
  */
 public class MonthEvent extends JPanel { 
     Color color = Color.BLACK;
     
+    /**
+     * Constructor utilized to create month event view
+     * @preconditons existing JFrame and event
+     * @postconditiond Event display created for event happening this month 
+     * @param event
+     * @param frame 
+     */
     public MonthEvent(Event event, JFrame frame) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
        

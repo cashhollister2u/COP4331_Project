@@ -22,12 +22,20 @@ import javax.swing.Box;
 import javax.swing.JFrame;
 
 /**
- *
+ * Class utilized to display events happening this week
+ * @invariant layouts will not change 
  * @author cashhollister
  */
 public class WeekEvent extends JPanel { 
     Color color = Color.BLACK;
     
+    /**
+     * Constructor utilized to create week day event view
+     * @preconditons existing JFrame and event
+     * @postconditiond Event display created for event happening this week 
+     * @param event
+     * @param frame 
+     */
     public WeekEvent(Event event, JFrame frame) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
        

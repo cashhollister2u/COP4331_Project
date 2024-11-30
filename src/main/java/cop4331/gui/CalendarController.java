@@ -180,6 +180,13 @@ public class CalendarController {
         });
     }
     
+    /**
+     * Private method used to assign months to calendar locations for month days
+     * @preconditions valid current day string and grid box object 
+     * @postconditions scrollable grid box created with all associated events
+     * @param currDay
+     * @param box 
+     */
     private void assignMonthEvents(String currDay, GridBox box) {
         String currDate = currDay.substring(0, 2);
         
@@ -192,6 +199,13 @@ public class CalendarController {
         }
     }
     
+    /**
+     * Private method used to assign months to calendar locations for weekdays
+     * @preconditions valid current day string and grid box object 
+     * @postconditions scrollable grid box created with all associated events
+     * @param currDay
+     * @param box 
+     */
     private void assignWeekEvents(String currDay, GridBox box) {
         String currDate = currDay.substring(0, 2);
         
@@ -204,6 +218,13 @@ public class CalendarController {
         }
     }
     
+    /**
+     * Private method used to assign months to calendar locations for current day
+     * @preconditions valid current day string and grid box object 
+     * @postconditions scrollable grid box created with all associated events
+     * @param currDay
+     * @param box 
+     */
     private void assignTodayEvents(String currDay, GridBox box) {
         String currDate = currDay.substring(0, 2);
         

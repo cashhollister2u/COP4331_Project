@@ -11,7 +11,6 @@ import java.awt.geom.Rectangle2D;
 
 /**
  * Class utilized to create grid box calendar components
- * @invariant border will always be black 
  *
  * @author cashhollister, andrewcoggins
  */

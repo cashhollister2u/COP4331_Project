@@ -18,7 +18,8 @@ import javax.swing.JFrame;
 
 
 /**
- *
+ * Class utilized to contain the task bar navigation 
+ * @invariant the currentFrame never changes after creation
  * @author cashhollister
  */
 public class TaskBarController extends JPanel{

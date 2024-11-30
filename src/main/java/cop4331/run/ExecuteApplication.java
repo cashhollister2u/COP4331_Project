@@ -8,12 +8,16 @@ import cop4331.gui.LoginController;
 import javax.swing.SwingUtilities;
 
 /**
- *
+ * Class utilized to kick off the Planner application
+ * @invariant always executes the LoginController
  * @author cashhollister
  */
 public class ExecuteApplication {
 
     /**
+     * Main method utilized to run the Planner Application
+     * @preconditions none
+     * @postconditions application runs
      * @param args the command line arguments
      */
     public static void main(String[] args) {

@@ -11,7 +11,8 @@ import java.util.List;
 import java.util.Arrays;
 
 /**
- *
+ * Class utilized to get and store relevant date time data for the application 
+ * @invariant the list of times, currentMonth, and numberOfDays remain constant after object creation
  * @author cashhollister
  */
 public class CurrentMonth {
@@ -45,27 +46,54 @@ public class CurrentMonth {
             "11:00 PM"
     );
     
+    /**
+     * Constructor to create CurrentMonth Object
+     * @preconditions none
+     * @postconditions CurrentMonth Object created
+     */
     public CurrentMonth() {
         this.currentMonth = YearMonth.now();
         this.numberOfDays = currentMonth.lengthOfMonth();
         this.dates = new ArrayList<>();
     }
-
+    
+    /**
+     * Method utilized to add dates to the dates List
+     * @preconditions none
+     * @postconditions list of dates generated
+     */
     private void generateDates() {
         for (int x = 1; x <= numberOfDays; x++) {
             this.dates.add(currentMonth.atDay(x));
         }
     }
     
+    /**
+     * Method utilized to get current dates in month
+     * @preconditions none
+     * @postconditions array list of dates
+     */
     public List<LocalDate> getDates() {
         this.generateDates();
         return this.dates;
     }
     
+    /**
+     * Method utilized to get times initialized locally
+     * @preconditions none
+     * @postconditions list of valid times
+     * @return List<String> times
+     */
     public List<String> getTimes() {
         return this.times;
     }
     
+    /**
+     * Method utilized to get string representing today 
+     * @preconditions none
+     * @postconditions string consisting of date and day of week
+     * @return String today
+     */
     public String getToday() {
         // gets todays date => change to String => get the last 2 characters (the day only)
         String todayDate = LocalDate.now().toString().substring(8, 10);
@@ -74,11 +102,23 @@ public class CurrentMonth {
         return todayDate + " - " + todayDayOfWeek;
     }
     
+    /**
+     * Method utilized to get today's date
+     * @preconditions none
+     * @postconditions return today's date
+     * @return String todayDate
+     */
     public String getTodayDate() {
         String todayDate = LocalDate.now().toString().substring(8, 10);
         return todayDate;
     }
     
+    /**
+     * Method utilized to get string values of current week
+     * @preconditions none
+     * @postconditions get string values of current week
+     * @return List<String> thisWeek
+     */
     public List<String> getCurrentWeek() {
         // empty list to contain days of this week
         List<String> thisWeek = new ArrayList<>();

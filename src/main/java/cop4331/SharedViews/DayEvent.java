@@ -22,12 +22,20 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- *
+ * Class utilized to display events happening today
+ * @invariant layouts will not change 
  * @author cashhollister
  */
 public class DayEvent extends JPanel {
     Color color = Color.BLACK;
     
+    /**
+     * Constructor utilized to create day event view
+     * @preconditons existing JFrame and event
+     * @postconditiond Event display created for event happening today 
+     * @param event
+     * @param frame 
+     */
     public DayEvent(Event event, JFrame frame) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
        
