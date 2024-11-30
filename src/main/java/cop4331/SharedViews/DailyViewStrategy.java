@@ -19,6 +19,11 @@ import java.util.List;
  */
 
 public class DailyViewStrategy implements CalendarViewStrategy {
+    /**
+     * {@inheritDoc}
+     * 
+     * Creates and returns a JPanel representing the daily calendar view.
+     */
     @Override
     public JPanel createCalendarView(JFrame frame) {
         JPanel todayContainerPanel = new JPanel(new FlowLayout());
