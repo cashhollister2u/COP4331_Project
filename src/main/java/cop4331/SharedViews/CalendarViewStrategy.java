@@ -8,7 +8,7 @@ import javax.swing.*;
 
 /**
  *
- * @author Andrew
+ * @author andrewcoggins
  */
 
 public interface CalendarViewStrategy {
