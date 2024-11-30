@@ -77,7 +77,8 @@ public class TaskBarController extends JPanel{
             @Override
             public void actionPerformed(ActionEvent e) {
                 currentFrame.dispose();
-                new CalendarController();
+                CalendarViewStrategy strategy = new MonthlyViewStrategy();
+                new CalendarController(strategy); 
             }
         });
         
