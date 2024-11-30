@@ -13,6 +13,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
+/**
+ *
+ * @author andrewcoggins
+ */
+
 public class DailyViewStrategy implements CalendarViewStrategy {
     @Override
     public JPanel createCalendarView(JFrame frame) {
