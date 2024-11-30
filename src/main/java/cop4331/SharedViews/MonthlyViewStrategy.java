@@ -15,7 +15,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 /**
- *
+ * Concrete strategy for creating the monthly calendar view.
  * @author andrewcoggins
  */
 
