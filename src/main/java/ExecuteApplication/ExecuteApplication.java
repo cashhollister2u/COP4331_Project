@@ -4,7 +4,7 @@
  */
 package ExecuteApplication;
 
-import GUI.LoginWindow;
+import LoginWindow.LoginController;
 import javax.swing.SwingUtilities;
 
 /**
@@ -17,6 +17,6 @@ public class ExecuteApplication {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new LoginWindow());
+        SwingUtilities.invokeLater(() -> new LoginController());
     }
 }
