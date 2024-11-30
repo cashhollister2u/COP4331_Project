@@ -85,6 +85,12 @@ public class MainInterfaceController {
         frame.setVisible(true);
     }
 
+     /**
+     * Assigns events to the appropriate day in the week view.
+     * 
+     * @param currDay The current day's date string.
+     * @param box The GridBox representing the day to which events should be assigned.
+     */
     private void assignWeekEvents(String currDay, GridBox box) {
         String currDate = currDay.substring(0, 2);
 
