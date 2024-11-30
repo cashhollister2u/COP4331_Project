@@ -15,7 +15,7 @@ import java.util.List;
 
 /**
  *
- * @author Andrew
+ * @author andrewcoggins
  */
 
 public class WeeklyViewStrategy implements CalendarViewStrategy {
