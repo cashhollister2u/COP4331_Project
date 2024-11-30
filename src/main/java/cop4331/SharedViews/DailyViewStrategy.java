@@ -14,7 +14,7 @@ import java.awt.*;
 import java.util.List;
 
 /**
- *
+ * Concrete strategy for creating the daily calendar view.
  * @author andrewcoggins
  */
 
