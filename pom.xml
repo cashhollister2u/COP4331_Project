@@ -11,4 +11,5 @@
         <maven.compiler.target>21</maven.compiler.target>
         <exec.mainClass>l1.project_cop4331.Project_COP4331</exec.mainClass>
     </properties>
+    <name>PlannerApplication</name>
 </project>
