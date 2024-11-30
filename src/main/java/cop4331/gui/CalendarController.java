@@ -29,7 +29,9 @@ public class CalendarController {
     private CardLayout cardLayout; // Make cardLayout a class member
 
     /**
-     * Constructs the CalendarWindow and initializes its components.
+     * Constructs the CalendarWindow with the specified view strategy.
+     *
+     * @param viewStrategy The strategy to use for creating the initial calendar view.
      */
     public CalendarController(CalendarViewStrategy viewStrategy) {
         frame = new JFrame();
