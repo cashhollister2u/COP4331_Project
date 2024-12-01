@@ -19,7 +19,7 @@ import cop4331.SharedViews.GridBox;
 
 /**
  * Concrete strategy for creating the weekly calendar view.
- * @author andrewcoggins
+ * @author andrewcoggins CashHollister
  */
 
 public class WeeklyViewStrategy implements CalendarViewStrategy {

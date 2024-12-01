@@ -21,7 +21,7 @@ import cop4331.SharedViews.GridBox;
 
 /**
  * Concrete strategy for creating the monthly calendar view.
- * @author andrewcoggins
+ * @author andrewcoggins CashHollister
  */
 
 public class MonthlyViewStrategy implements CalendarViewStrategy {

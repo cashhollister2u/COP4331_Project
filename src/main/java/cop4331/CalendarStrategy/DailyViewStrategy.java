@@ -19,7 +19,7 @@ import java.util.List;
 
 /**
  * Concrete strategy for creating the daily calendar view.
- * @author andrewcoggins
+ * @author andrewcoggins CashHollister
  */
 
 public class DailyViewStrategy implements CalendarViewStrategy {
