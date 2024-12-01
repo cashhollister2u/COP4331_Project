@@ -2,16 +2,20 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package cop4331.SharedViews;
+package cop4331.CalendarStrategy;
 
-import cop4331.SharedModels.CurrentMonth;
 import cop4331.System.PlannerSystem;
 import cop4331.SharedModels.UserAccount;
-import cop4331.SharedModels.Event;
+import cop4331.EventComposite.Event;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
+import cop4331.CurrentDateDecorator.CurrentDate;
+import cop4331.CurrentDateDecorator.CurrentDay;
+import cop4331.CurrentDateDecorator.CurrentWeek;
+import cop4331.CurrentDateDecorator.EventDate;
+import cop4331.SharedViews.GridBox;
 
 /**
  * Concrete strategy for creating the weekly calendar view.
@@ -34,9 +38,14 @@ public class WeeklyViewStrategy implements CalendarViewStrategy {
         UserAccount userAccount = systemInstance.getUserAccount();
         List<Event> accountEvents = userAccount.getEvents();
 
-        CurrentMonth currentMonth = new CurrentMonth();
-        List<String> weekDays = currentMonth.getCurrentWeek();
-        String todayDate = currentMonth.getTodayDate();
+        // decorator pattern to get the String value corrisponding to today
+        CurrentDate currentDate = new EventDate();
+        CurrentDate eventCurrentWeek = new CurrentWeek(currentDate);
+        List<String> weekDays = eventCurrentWeek.getCurrentDays();
+        
+        // get today's date w/ CurrentDay decorator 
+        CurrentDate eventCurrentDay = new CurrentDay(currentDate);
+        String todayDate = eventCurrentDay.getCurrentDays().get(0).substring(0,2);
 
         for (int x = 0; x < weekDays.size(); x++) {
             String currDate = weekDays.get(x);

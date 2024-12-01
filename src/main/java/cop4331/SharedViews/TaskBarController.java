@@ -4,6 +4,8 @@
  */
 package cop4331.SharedViews;
 
+import cop4331.CalendarStrategy.MonthlyViewStrategy;
+import cop4331.CalendarStrategy.CalendarViewStrategy;
 import cop4331.gui.MainInterfaceController;
 import cop4331.gui.LoginController;
 import cop4331.gui.CalendarController;

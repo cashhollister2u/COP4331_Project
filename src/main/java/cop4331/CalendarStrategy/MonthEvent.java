@@ -2,9 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package cop4331.SharedViews;
+package cop4331.CalendarStrategy;
 
-import cop4331.SharedModels.Event;
+import cop4331.EventComposite.Event;
 import cop4331.gui.EventDetailsController;
 
 import java.awt.Color;

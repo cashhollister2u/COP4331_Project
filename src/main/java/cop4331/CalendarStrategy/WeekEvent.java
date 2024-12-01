@@ -2,51 +2,48 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package cop4331.SharedViews;
+package cop4331.CalendarStrategy;
 
 import cop4331.gui.EventDetailsController;
-import cop4331.SharedModels.Event;
+import cop4331.EventComposite.Event;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.geom.Rectangle2D;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JFrame;
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.Rectangle2D;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.JButton;
+import javax.swing.BoxLayout;
+import javax.swing.Box;
+import javax.swing.JFrame;
 
 /**
- * Class utilized to display events happening today
+ * Class utilized to display events happening this week
  * @invariant layouts will not change 
  * @author cashhollister
  */
-public class DayEvent extends JPanel {
-    Color color = Color.BLACK;
+public class WeekEvent extends JPanel { 
+    private Color color;
     
     /**
-     * Constructor utilized to create day event view
+     * Constructor utilized to create week day event view
      * @preconditons existing JFrame and event
-     * @postconditiond Event display created for event happening today 
+     * @postconditiond Event display created for event happening this week 
      * @param event
      * @param frame 
      */
-    public DayEvent(Event event, JFrame frame) {
+    public WeekEvent(Event event, JFrame frame) {
+        this.color = Color.BLACK;
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
        
         // generate labels for each detail
         JLabel title = new JLabel(event.getTitle());
         JLabel course = new JLabel(event.getCourse());
         JLabel time = new JLabel(event.getTime());
-        JLabel description = new JLabel(event.getDescription());
-        JLabel priority = new JLabel(event.getPriority());
-        JLabel status = new JLabel(event.getStatus());
-        
         
         // generate details button
         JButton detailsButton = new JButton("details");
@@ -55,9 +52,6 @@ public class DayEvent extends JPanel {
         add(title);
         add(course);
         add(time);
-        add(description);
-        add(priority);
-        add(status);
         
         // handle complete status
         if (event.getComplete()) {

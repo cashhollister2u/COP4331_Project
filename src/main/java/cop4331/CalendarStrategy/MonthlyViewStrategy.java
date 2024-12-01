@@ -2,17 +2,22 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package cop4331.SharedViews;
+package cop4331.CalendarStrategy;
 
-import cop4331.SharedModels.CurrentMonth;
+import cop4331.CalendarStrategy.MonthEvent;
+import cop4331.CalendarStrategy.CalendarViewStrategy;
 import cop4331.System.PlannerSystem;
 import cop4331.SharedModels.UserAccount;
-import cop4331.SharedModels.Event;
+import cop4331.EventComposite.Event;
 
 import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;
 import java.util.List;
+import cop4331.CurrentDateDecorator.CurrentDate;
+import cop4331.CurrentDateDecorator.CurrentDay;
+import cop4331.CurrentDateDecorator.EventDate;
+import cop4331.SharedViews.GridBox;
 
 /**
  * Concrete strategy for creating the monthly calendar view.
@@ -35,9 +40,10 @@ public class MonthlyViewStrategy implements CalendarViewStrategy {
         UserAccount userAccount = systemInstance.getUserAccount();
         List<Event> accountEvents = userAccount.getEvents();
 
-        CurrentMonth currentMonth = new CurrentMonth();
-        String todayDate = currentMonth.getTodayDate();
-        List<LocalDate> monthDates = currentMonth.getDates();
+        CurrentDate currentDate = new EventDate();
+        CurrentDate eventCurrentDay = new CurrentDay(currentDate);
+        String todayDate = eventCurrentDay.getCurrentDays().get(0).substring(0,2);
+        List<LocalDate> monthDates = currentDate.getDates();
 
         for (int x = 0; x < monthDates.size(); x++) {
             String currDate = monthDates.get(x).toString().substring(8,10);

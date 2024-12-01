@@ -47,12 +47,13 @@ public class GridBox extends JPanel {
     /**
      * Public method to add events to the Event Panel
      * @preconditions none
-     * @postconditions events added to eventPanel and are scrollable
+     * @postconditions events added to eventPanel and are able to be scrolled
      * @param component 
      */
     public void addEvent(Component component) {
         eventPanel.add(component);
-        eventPanel.revalidate(); // Revalidate to update the layout
+        // re-calcs the dimenstions and locations of items in the eventPanel
+        eventPanel.revalidate(); 
         eventPanel.repaint();
     }
 

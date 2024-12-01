@@ -6,9 +6,8 @@ package cop4331.gui;
 
 import cop4331.System.PlannerSystem;
 import cop4331.SharedModels.UserAccount;
-import cop4331.SharedModels.Event;
+import cop4331.EventComposite.Event;
 import cop4331.SharedViews.TaskBarController;
-import cop4331.SharedModels.CurrentMonth;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,6 +15,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.util.List;
+import cop4331.CurrentDateDecorator.CurrentDate;
+import cop4331.CurrentDateDecorator.EventDate;
 
 /**
  * This class represents the window for adding new events to the calendar.
@@ -103,16 +104,16 @@ public class AddEventController {
         JCheckBox conflictBox = new JCheckBox();
         
         
-        // init CurrentMonth object
-        CurrentMonth currentMonth = new CurrentMonth();
+        // init CurrentDate object
+        CurrentDate currentDate = new EventDate();
         // add dates to combo box
-        List<LocalDate> dateList = currentMonth.getDates();
+        List<LocalDate> dateList = currentDate.getDates();
         for (LocalDate date : dateList) {
             dateComboBox.addItem(date);
         }
         
         // add times to combo box
-        List<String> timeList = currentMonth.getTimes();
+        List<String> timeList = currentDate.getTimes();
         for (String specificTime : timeList) {
             timeComboBox.addItem(specificTime);
         }

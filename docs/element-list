@@ -1,3 +1,6 @@
+cop4331.CalendarStrategy
+cop4331.CurrentDateDecorator
+cop4331.EventComposite
 cop4331.gui
 cop4331.run
 cop4331.SharedModels

@@ -6,22 +6,28 @@
 package cop4331.gui;
 
 import cop4331.SharedViews.GridBox;
-import cop4331.SharedModels.CurrentMonth;
-import cop4331.SharedViews.WeekEvent;
-import cop4331.SharedModels.Event;
+import cop4331.CalendarStrategy.WeekEvent;
+import cop4331.EventComposite.Event;
 import cop4331.System.PlannerSystem;
 import cop4331.SharedModels.UserAccount;
+import cop4331.EventComposite.ConflictsCheck;
 import cop4331.SharedViews.TaskBarController;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
+import cop4331.CurrentDateDecorator.CurrentDate;
+import cop4331.CurrentDateDecorator.CurrentDay;
+import cop4331.CurrentDateDecorator.CurrentWeek;
+import cop4331.CurrentDateDecorator.EventDate;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * This class represents the main interface of the planner application.
  * It contains the taskbar and a central panel for displaying the current week.
  *
- * @author andrewcoggins
+ * @author andrewcoggins Cash Hollister
  */
 public class MainInterfaceController {
     private PlannerSystem systemInstance = PlannerSystem.getInstance();
@@ -39,7 +45,33 @@ public class MainInterfaceController {
         frame.setTitle("Main Interface");
 
         // Add the taskbar panel to the west of the frame
-        TaskBarController taskbarPanel = new TaskBarController(frame);
+        JPanel taskbarPanel = new JPanel(new GridLayout(5, 1));
+        TaskBarController taskbar = new TaskBarController(frame);
+        //conflic check buton
+        JButton conflictCheck = new JButton("Check For Conflicts");
+        
+        // add action listener that notifies the user of any exisiting conflicts
+        conflictCheck.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                List<Event> events = userAccount.getEvents();
+                ConflictsCheck conflictCheck = new ConflictsCheck();
+                
+                for (Event event : events) {
+                    conflictCheck.add(event);
+                }
+                boolean isConflict = conflictCheck.getConflict();
+                
+                if (isConflict) {
+                    JOptionPane.showMessageDialog(frame, "Conflict Found Check Calendar Page", "Error", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(frame, "No Conflicts Found", "Information", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+        });
+        
+        taskbarPanel.add(taskbar);
+        taskbarPanel.add(conflictCheck);
         frame.add(taskbarPanel, BorderLayout.WEST);
 
         // Create the main panel 
@@ -50,12 +82,17 @@ public class MainInterfaceController {
         JPanel weekCompsPanel = new JPanel(new GridLayout(1, 7));
         weekContainerPanel.add(weekCompsPanel);
 
-        // Initialize CurrentMonth Object
-        CurrentMonth currentMonth = new CurrentMonth();
-
+        // Initialize CurrentDate Object
+        // decorator pattern to get the String value corrisponding to today
+        CurrentDate currentDate = new EventDate();
+        CurrentDate eventCurrentWeek = new CurrentWeek(currentDate);
+        
+        // get today's date w/ CurrentDay decorator 
+        CurrentDate eventCurrentDay = new CurrentDay(currentDate);
+        
         // Populate week components
-        List<String> weekDays = currentMonth.getCurrentWeek();
-        String todayDate = currentMonth.getTodayDate();
+        List<String> weekDays = eventCurrentWeek.getCurrentDays();
+        String todayDate = eventCurrentDay.getCurrentDays().get(0).substring(0,2);
         for (int x = 0; x < weekDays.size(); x++) {
             String currDate = weekDays.get(x);
             JLabel dateString = new JLabel(currDate);

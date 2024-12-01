@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package cop4331.SharedModels;
+import cop4331.EventComposite.Event;
 import java.io.Serializable;
 import java.util.List;
 

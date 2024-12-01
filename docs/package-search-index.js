@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"cop4331.gui"},{"l":"cop4331.run"},{"l":"cop4331.SharedModels"},{"l":"cop4331.SharedViews"},{"l":"cop4331.System"}];updateSearchResults();
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"cop4331.CalendarStrategy"},{"l":"cop4331.CurrentDateDecorator"},{"l":"cop4331.EventComposite"},{"l":"cop4331.gui"},{"l":"cop4331.run"},{"l":"cop4331.SharedModels"},{"l":"cop4331.SharedViews"},{"l":"cop4331.System"}];updateSearchResults();

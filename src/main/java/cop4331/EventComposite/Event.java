@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package cop4331.SharedModels;
+package cop4331.EventComposite;
 import java.io.Serializable;
 import java.time.LocalDate;
 
@@ -11,7 +11,7 @@ import java.time.LocalDate;
  * @invariant types of instance variable will be constant
  * @author cashhollister
  */
-public class Event implements Serializable {
+public class Event implements Serializable, EventConflict {
     private String title;
     private LocalDate date;
     private String time;
@@ -237,6 +237,7 @@ public class Event implements Serializable {
      * @postconditions conflict returned
      * @return Boolean conflict
      */
+    @Override
     public boolean getConflict() {
         return this.conflict;
     }

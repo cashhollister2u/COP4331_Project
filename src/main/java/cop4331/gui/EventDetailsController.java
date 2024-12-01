@@ -7,7 +7,7 @@ package cop4331.gui;
 
 import cop4331.System.PlannerSystem;
 import cop4331.SharedModels.UserAccount;
-import cop4331.SharedModels.Event;
+import cop4331.EventComposite.Event;
 
 import javax.swing.*;
 import java.awt.*;

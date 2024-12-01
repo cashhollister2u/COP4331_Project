@@ -5,11 +5,11 @@
 
 package cop4331.gui;
 
-import cop4331.SharedViews.CalendarViewStrategy;
-import cop4331.SharedViews.DailyViewStrategy;
-import cop4331.SharedViews.MonthlyViewStrategy;
+import cop4331.CalendarStrategy.CalendarViewStrategy;
+import cop4331.CalendarStrategy.DailyViewStrategy;
+import cop4331.CalendarStrategy.MonthlyViewStrategy;
 import cop4331.SharedViews.TaskBarController;
-import cop4331.SharedViews.WeeklyViewStrategy;
+import cop4331.CalendarStrategy.WeeklyViewStrategy;
 
 import javax.swing.*;
 import java.awt.*;
