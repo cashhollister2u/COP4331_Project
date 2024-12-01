@@ -7,7 +7,7 @@ package cop4331.EventComposite;
 import java.util.ArrayList;
 
 /**
- * Class utilized to check for conflicts in the user's Planner instance
+ * Class utilized to check for conflicts in the user's Planner instance Composite Pattern Composite
  * @author cashhollister
  */
 public class ConflictsCheck implements EventConflict{
