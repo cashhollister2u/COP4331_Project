@@ -66,6 +66,7 @@ public class EventDate implements CurrentDate {
         for (int x = 1; x <= numberOfDays; x++) {
             this.dates.add(currentMonth.atDay(x));
         }
+        System.out.println("month " + currentMonth);
     }
     
     /**
@@ -77,6 +78,7 @@ public class EventDate implements CurrentDate {
     @Override
     public List<LocalDate> getDates() {
         this.generateDates();
+        System.out.println("dates " + dates);
         return this.dates;
     }
     
@@ -101,18 +103,26 @@ public class EventDate implements CurrentDate {
     public List<String> getCurrentDays() {
         // empty list to contain days of this week
         List<String> thisWeek = new ArrayList<>();
-        // ensures that the day of the week will always start on the most recent sunday
-        // finds current day thurs 28 => walkes back the days based on thursdays day value (4) => returns sunday 24th
-        LocalDate start = LocalDate.now().minusDays(LocalDate.now().getDayOfWeek().getValue());
         
-        // appends the day of the week to thisWeek until the currDay == end (Sunday)
-        LocalDate currDay = start;
-        for (int x = 0; x < 7; x++) {
-            String dayToAdd = currDay.toString().substring(8, 10) + " - " + currDay.getDayOfWeek().toString();
-            thisWeek.add(dayToAdd);
-            currDay = currDay.plusDays(1);
+        // init start date
+        LocalDate start;
+        if (LocalDate.now().getDayOfWeek().getValue() == 7) {
+            // ensures that the day of the week will always start on the most recent sunday
+            start = LocalDate.now();
+        } else {
+            // ensures that the day of the week will always start on the most recent sunday
+            // finds current day thurs 28 => walkes back the days based on thursdays day value (4) => returns sunday 24th
+            start = LocalDate.now().minusDays(LocalDate.now().getDayOfWeek().getValue());
         }
+        // appends the day of the week to thisWeek until the currDay == end (Sunday)
+            LocalDate currDay = start;
+            for (int x = 0; x < 7; x++) {
+                String dayToAdd = currDay.toString().substring(8, 10) + " - " + currDay.getDayOfWeek().toString();
+                thisWeek.add(dayToAdd);
+                currDay = currDay.plusDays(1);
+            }
+
+            return thisWeek;
         
-        return thisWeek;
     }
 }

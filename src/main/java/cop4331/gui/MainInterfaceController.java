@@ -86,15 +86,14 @@ public class MainInterfaceController {
         // decorator pattern to get the String value corrisponding to today
         CurrentDate currentDate = new EventDate();
         CurrentDate eventCurrentWeek = new CurrentWeek(currentDate);
-        
         // get today's date w/ CurrentDay decorator 
         CurrentDate eventCurrentDay = new CurrentDay(currentDate);
-        
         // Populate week components
         List<String> weekDays = eventCurrentWeek.getCurrentDays();
         String todayDate = eventCurrentDay.getCurrentDays().get(0).substring(0,2);
         for (int x = 0; x < weekDays.size(); x++) {
-            String currDate = weekDays.get(x);
+            try { 
+                String currDate = weekDays.get(x);
             JLabel dateString = new JLabel(currDate);
 
             // Change color based on current day
@@ -109,6 +108,9 @@ public class MainInterfaceController {
             assignWeekEvents(currDate, box);
 
             weekCompsPanel.add(box);
+            } catch (Exception e) {
+                System.out.println("failed at MainInterface week loop");
+            }
         }
 
         // Add the week view to the main panel

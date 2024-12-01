@@ -67,11 +67,17 @@ public class CurrentDay implements CurrentDate {
     public List<String> getCurrentDays() {
         List<String> weekDays = eventDate.getCurrentDays();
         List<String> currentDay = new ArrayList<>();
-        int todayValue = LocalDate.now().getDayOfWeek().getValue();
         
+        // init todayValue
+        int todayValue;
+        if (LocalDate.now().getDayOfWeek().getValue() == 7) {
+            todayValue = 0;
+        } else {
+            todayValue = LocalDate.now().getDayOfWeek().getValue();
+        }
         String today = weekDays.get(todayValue);
         currentDay.add(today);
-        
+
         return currentDay;
     }
 }
