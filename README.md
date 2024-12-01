@@ -1,6 +1,25 @@
-<img width="538" alt="Screenshot 2024-11-13 at 8 31 09 PM" src="https://github.com/user-attachments/assets/1aa53317-d5b9-4bf5-8cd4-157c90216f79">
-<img width="531" alt="Screenshot 2024-11-13 at 8 31 01 PM" src="https://github.com/user-attachments/assets/cef8f52d-e265-4c21-ae69-58ab9bd335df">
-<img width="540" alt="Screenshot 2024-11-13 at 8 30 54 PM" src="https://github.com/user-attachments/assets/e08b8559-a5e8-4546-836e-f1122975dd3a">
-<img width="556" alt="Screenshot 2024-11-13 at 8 30 44 PM" src="https://github.com/user-attachments/assets/8c93de3c-4032-41f3-a2ca-d539d6a3cfc3">
-<img width="540" alt="Screenshot 2024-11-13 at 8 30 34 PM" src="https://github.com/user-attachments/assets/d36c01f3-8808-4f48-81f5-a32dd4c67564">
-<img width="1120" alt="Screenshot 2024-11-13 at 9 32 26 PM" src="https://github.com/user-attachments/assets/50eb6a1a-ba4d-4da2-bddc-cee11b2ca727">
+# Planner Application
+### Description: 
+- Personal desktop planner application utilized by the user to create and track personalized events. The Planner automatically identifies the current day, week, month from the user's machine and displaces the related data/events in the application. Events contain a variety of different options at creation allowing the user to generate events that are clear and descriptive. The planner has different views that present the saved events in different formats, providing varying amounts of detail for each view.
+## Basic Functionality
+- Create user account
+- Login via user account
+- Create Events for planner
+- View events in planner:
+  - Day view
+  - Week view
+  - Month view
+- Check for existing conflicts in planner
+- View event details
+- Delete Events
+- Delete user account
+- Change user account credencials
+
+## How to build / run .jar
+- Clone the repository
+- Open the repository via NetBeans or other IDE
+- Open the project in the IDE
+- Right click project dir (may be different based on IDE)
+- Select "Clean and Build"
+- Open the "target" directory and execute the .jar file located there
+   - "target" dir located at the same level as the "src" dir.
